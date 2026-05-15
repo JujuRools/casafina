@@ -14,6 +14,8 @@
     <script type="module" src="script.js"></script>
   </head>
   <body>
+    <div data-scroll-container>
+    <div data-scroll-section>
     <header class="top-bar" aria-label="Social and booking links">
       <a class="top-bar-link" href="mailto:hello@example.com?subject=Book%20for%20a%20party">Follow us</a>
       <nav class="top-bar-links">
@@ -63,6 +65,7 @@
           <img class="gift-card-top" src="gift-card-top.png" alt="" />
         </a>
         <img class="paper-photo" src="floating-photo-4.png" alt="" data-scroll data-scroll-speed="0.2" />
+        <img class="cheers-photo" src="cheers-photo.png" alt="" data-scroll data-scroll-speed="0.18" />
         <div class="paper-block" data-scroll data-scroll-speed="0.15">
           <h2 class="paper-title">About Casa Fina</h2>
           <p class="paper-copy">
@@ -72,6 +75,26 @@
             small producers. Our menu features small plates inspired by the cuisines of
             Spain, Portugal, and France. The cozy space features a long bar and secluded
             patio. Rosie&rsquo;s is walk-in friendly and does not take reservations.
+          </p>
+          <h2 class="paper-title">Location</h2>
+          <p class="paper-copy">
+            mon, tue, wed<br />
+            12:45 - 23:00<br />
+            thu<br />
+            12:45 - 23:30<br />
+            fri<br />
+            12:45 - 23:30<br />
+            sat<br />
+            12:45 - 23:30<br />
+            sun<br />
+            12:45 - 23:00
+          </p>
+          <h2 class="paper-title">Reservation</h2>
+          <p class="paper-copy">
+            Walk-ins are welcome, but please bear in mind that spaces can be limited. We
+            offer reservations for up to 8 persons. Please note bookings open at 9am, one
+            month in advance of a date, and all booking availability is displayed here on
+            the website.
           </p>
         </div>
       </div>
@@ -117,6 +140,8 @@
         </div>
       </section>
     </footer>
+    </div>
+    </div>
     <dialog class="booking-modal" aria-labelledby="booking-title">
       <form class="booking-form" method="dialog">
         <button class="modal-close" type="button" data-booking-close aria-label="Close booking form">

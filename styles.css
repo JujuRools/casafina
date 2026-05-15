@@ -408,7 +408,7 @@ a.frame-link {
   z-index: 3;
   width: 650px;
   aspect-ratio: 650 / 954;
-  padding: 70px 60px 60px;
+  padding: 50px 60px 60px;
   background-image: url("paper.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -428,8 +428,20 @@ a.frame-link {
   transform: rotate(5deg);
 }
 
+.floating-photo-3 .cheers-photo {
+  position: absolute;
+  top: 1120px;
+  left: 140px;
+  z-index: 2;
+  display: block;
+  width: 300px;
+  max-width: none;
+  height: auto;
+  rotate: -5deg;
+}
+
 .floating-photo-3 .paper-title {
-  margin: 0;
+  margin: 30px 0 0;
   font-family: "Chango", cursive;
   font-size: 20px;
   font-weight: 400;
@@ -437,6 +449,10 @@ a.frame-link {
   text-align: center;
   text-transform: uppercase;
   color: #6e2432;
+}
+
+.floating-photo-3 .paper-copy + .paper-title {
+  margin-top: 50px;
 }
 
 .floating-photo-3 .paper-copy {
