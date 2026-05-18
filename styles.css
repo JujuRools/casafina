@@ -434,7 +434,7 @@ a.frame-link {
   left: 140px;
   z-index: 2;
   display: block;
-  width: 300px;
+  width: 376px;
   max-width: none;
   height: auto;
   rotate: -5deg;
@@ -590,4 +590,235 @@ a.frame-link {
 
 .modal-close {
   justify-self: end;
+}
+
+@media (max-width: 700px) {
+  .top-bar {
+    height: 40px;
+    padding: 0 16px;
+    justify-content: center;
+  }
+
+  .top-bar-links {
+    gap: 14px;
+  }
+
+  .top-bar-link,
+  .top-bar .top-bar-link {
+    font-size: 9px;
+    letter-spacing: 1.4px;
+  }
+
+  /* Hide the "Follow us" link on the left of the top bar to mirror the
+     screenshot which shows two CONTACT US-style links on the right. */
+  .top-bar > .top-bar-link:first-child {
+    display: none;
+  }
+
+  .site-shell {
+    min-height: 1980px;
+  }
+
+  /* --- Frame (Casa Fina logo block) --- */
+  .frame-placement {
+    top: 16px;
+    width: min(100% - 24px, 376px);
+    max-width: none;
+    z-index: 10;
+  }
+
+  .frame-logo {
+    top: 28px;
+    width: 52.08%;
+  }
+
+  .logo-lines {
+    top: 138px;
+    width: calc(100% - 24px);
+    gap: 4px;
+  }
+
+  .frame-actions {
+    top: 154px;
+    gap: 14px;
+  }
+
+  .frame-link,
+  button.frame-link,
+  a.frame-link {
+    font-size: 9px;
+    letter-spacing: 1.6px;
+  }
+
+  .frame-action-divider {
+    height: 18px;
+  }
+
+  /* --- Row 1: paella photo (left) + Tapas Vida wine glasses (right) --- */
+  .floating-photo-1 {
+    top: 250px;
+    left: 12px;
+    width: 130px;
+  }
+
+  .floating-photo-1 > img:not(.our-mark):not(.chef-small-mark) {
+    display: none;
+  }
+
+  .floating-photo img.our-mark {
+    display: none;
+  }
+
+  .floating-photo img.chef-small-mark {
+    display: none;
+  }
+
+  /* The good-vibes-mark (TAPAS VIDA wine glasses) lives inside .floating-photo-2.
+     Reposition .floating-photo-2 so the wine glasses sit top-right and its photo
+     stacks just below the paella photo. */
+  .floating-photo-2 {
+    top: 290px;
+    left: auto;
+    right: 12px;
+    width: 150px;
+  }
+
+  .floating-photo-2 > img {
+    width: 195px;
+    margin-top: 280px;
+  }
+
+  .floating-photo-2 .good-vibes-placement {
+    top: -90px;
+    left: 50%;
+  }
+
+  .floating-photo-2 .good-vibes-mark {
+    width: 215px;
+  }
+
+  /* --- Row 2: menu (left) sits beneath the paella photo --- */
+  .frame-menu {
+    top: 440px;
+    bottom: auto;
+    left: 50%;
+    width: 172px;
+    z-index: 10;
+  }
+
+  /* Hide the chef "Erind" callout on mobile to keep the composition clean. */
+  .chef-mark {
+    display: none;
+  }
+
+  /* --- T-shirt overlay --- */
+  .tee-overlay {
+    top: auto;
+    bottom: -760px;
+    left: calc(50% - 120px);
+    width: 280px;
+    transform: translateX(-50%) scaleX(-1);
+  }
+
+  /* --- Floating photo 3 group (gift card, paper block, photos) --- */
+  .floating-photo-3 {
+    top: 800px;
+    left: 0;
+    right: 0;
+    margin-inline: auto;
+    width: min(100% - 24px, 376px);
+  }
+
+  .floating-photo-3 > img {
+    display: block;
+    position: relative;
+    top: -550px;
+    left: -150px;
+    width: 80%;
+    z-index: 0;
+  }
+
+  .floating-photo-3 .gift-card {
+    top: 50px;
+    left: auto;
+    right: 30px;
+    width: 200px;
+    height: auto;
+    aspect-ratio: 337 / 239;
+    transform: rotate(40deg);
+    z-index: 4;
+  }
+
+  .floating-photo-3 .gift-card img.gift-card-inside {
+    left: 56px;
+  }
+
+  /* Paper block becomes the centerpiece - full width on mobile. */
+  .floating-photo-3 .paper-block {
+    top: 180px;
+    left: 0;
+    right: 0;
+    margin-inline: auto;
+    width: calc(100% - 48px);
+    aspect-ratio: auto;
+    padding: 44px 36px 56px;
+  }
+
+  .floating-photo-3 .paper-title {
+    margin-top: 18px;
+    font-size: 14px;
+  }
+
+  .floating-photo-3 .paper-copy + .paper-title {
+    margin-top: 30px;
+  }
+
+  .floating-photo-3 .paper-copy {
+    width: 100%;
+    margin-top: 16px;
+    font-size: 9px;
+    line-height: 1.7;
+  }
+
+  /* Bottom photo (cheers/wine) sits below the paper. */
+  .floating-photo-3 .paper-photo {
+    top: auto;
+    bottom: -240px;
+    left: 50%;
+    width: 180px;
+    transform: translate(-50%, 0) rotate(5deg);
+  }
+
+  .floating-photo-3 .cheers-photo {
+    top: auto;
+    bottom: -260px;
+    left: 50%;
+    width: 220px;
+    transform: translate(-50%, 0);
+    rotate: -5deg;
+  }
+
+  /* --- Footer --- */
+  .site-footer {
+    flex-direction: column;
+    gap: 20px;
+    padding: 50px 20px 40px;
+  }
+
+  .footer-contact {
+    width: 100%;
+  }
+
+  .footer-contact[aria-hidden="true"] {
+    display: none;
+  }
+
+  .footer-logo {
+    width: 44px;
+  }
+
+  .contact-info {
+    margin-top: 24px;
+    font-size: 11px;
+  }
 }
