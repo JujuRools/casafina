@@ -69,7 +69,7 @@ body {
 .site-shell {
   position: relative;
   z-index: 6;
-  min-height: 2100px;
+  min-height: calc(100vh - 50px);
   overflow-x: clip;
 }
 
@@ -178,11 +178,12 @@ body {
 
 .frame-placement {
   position: absolute;
-  top: 30px;
+  top: 50%;
   left: 50%;
   width: 504px;
   max-width: calc(100vw - 2rem);
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%) scale(1.6);
+  transform-origin: center;
 }
 
 .top-frame {
@@ -616,12 +617,12 @@ a.frame-link {
   }
 
   .site-shell {
-    min-height: 1980px;
+    min-height: calc(100vh - 40px);
   }
 
   /* --- Frame (Casa Fina logo block) --- */
   .frame-placement {
-    top: 16px;
+    top: 50%;
     width: min(100% - 24px, 376px);
     max-width: none;
     z-index: 10;
