@@ -26,50 +26,127 @@
   color: #fff7f0;
   background: #6e2432;
   font-family: "IBM Plex Mono", monospace;
+  --page-gutter: clamp(16px, 3vw, 40px);
+  --hero-frame-scale: 1.536;
+  --hero-frame-width: clamp(380px, 42vw, 504px);
 }
 
 * {
   box-sizing: border-box;
 }
 
+html,
 body {
-  min-height: 100vh;
   margin: 0;
   background: #6e2432;
+}
+
+/* Hero stays pinned while the menu section scrolls up over it */
+[data-scroll-section] {
+  position: sticky;
+  top: 0;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 .top-bar {
   position: relative;
   z-index: 10;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  height: 50px;
-  padding: 0 40px;
+  justify-content: center;
+  min-height: 50px;
+  padding: 0 var(--page-gutter);
+  margin-top: 20px;
+  margin-bottom: 20px;
   background: #6e2432;
+}
+
+.top-bar > .top-bar-link:first-child {
+  position: absolute;
+  left: var(--page-gutter);
+}
+
+.top-bar-link--instagram {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .top-bar-links {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 32px;
+  justify-content: center;
+  gap: 10px;
 }
 
 .top-bar-link {
   color: #ffe6b7;
-  font: inherit;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 2.4px;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(12px, 1.12vw, 16px);
+  font-weight: 600;
+  letter-spacing: 0.8px;
   text-decoration: none;
   text-transform: uppercase;
   white-space: nowrap;
 }
 
+.top-bar-link.top-bar-link--instagram {
+  font-family: inherit;
+  font-size: clamp(10px, 0.84vw, 12px);
+  font-weight: 500;
+}
+
+.top-bar a.top-bar-link:hover {
+  color: #ffffff;
+}
+
+.top-bar-links .top-bar-link {
+  padding: clamp(8px, 0.7vw, 10px) clamp(10px, 1.4vw, 20px);
+  border: 0;
+  border-radius: 3px;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(12px, 1.12vw, 16px);
+  font-weight: 600;
+}
+
+.top-bar-links .top-bar-link--solid {
+  position: absolute;
+  right: 40px;
+  background-color: #ffe6b7;
+  border-color: #ffe6b7;
+  color: #2a2a2a;
+}
+
+.page-footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  color: #ffe6b7;
+  font-size: clamp(10px, 0.84vw, 12px);
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+}
+
+.page-footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
 .site-shell {
   position: relative;
   z-index: 6;
-  min-height: calc(100vh - 50px);
+  flex: 1;
+  min-height: 0;
   overflow-x: clip;
 }
 
@@ -180,9 +257,9 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 504px;
-  max-width: calc(100vw - 2rem);
-  transform: translate(-50%, -50%) scale(1.6);
+  width: var(--hero-frame-width);
+  max-width: none;
+  transform: translate(-50%, -50%) scale(var(--hero-frame-scale));
   transform-origin: center;
 }
 
@@ -190,40 +267,25 @@ body {
   display: block;
   width: 100%;
   height: auto;
+  transform: scale(1.56);
+  transform-origin: center;
 }
 
 .frame-logo {
   position: absolute;
-  top: 30px;
+  top: 5.95%;
   left: 50%;
   display: block;
-  width: 306px;
+  width: calc(100% - 2rem);
   max-width: calc(100% - 2rem);
   height: auto;
   transform: translateX(-50%);
 }
 
-.logo-lines {
-  position: absolute;
-  top: 194px;
-  left: 50%;
-  display: grid;
-  gap: 6px;
-  width: 398px;
-  max-width: calc(100% - 2rem);
-  transform: translateX(-50%);
-}
-
-.logo-lines span {
-  display: block;
-  height: 1px;
-  background: #8b4b4d;
-}
-
 .frame-actions {
   position: absolute;
-  top: 220px;
-  left: 50%;
+  top: 85%;
+  left: 61.11%;
   display: flex;
   align-items: center;
   gap: 26px;
@@ -255,6 +317,16 @@ a.frame-link {
   white-space: nowrap;
 }
 
+.frame-tagline {
+  color: #ffe6b7;
+  font-size: clamp(11px, 1.3vw, 15.6px);
+  font-weight: 500;
+  letter-spacing: clamp(1.6px, 0.25vw, 3px);
+  text-transform: uppercase;
+  transform: translateX(-30px);
+  white-space: nowrap;
+}
+
 .frame-action-divider {
   width: 1px;
   height: 26px;
@@ -283,16 +355,16 @@ a.frame-link {
 }
 
 .floating-photo-1 {
-  top: 300px;
-  left: calc(50% - 570px);
-  width: 208px;
+  top: clamp(230px, 20.8vw, 300px);
+  left: max(var(--page-gutter), calc(50% - min(39.6vw, 570px)));
+  width: clamp(150px, 14.4vw, 208px);
   z-index: 2;
 }
 
 .floating-photo-2 {
   top: calc(100% + 250px);
-  left: calc(50% + 206.5px);
-  width: 346px;
+  left: calc(50% + clamp(120px, 14.3vw, 206.5px));
+  width: clamp(250px, 24vw, 346px);
 }
 
 .floating-photo-2 .good-vibes-placement {
@@ -309,9 +381,9 @@ a.frame-link {
 }
 
 .floating-photo-3 {
-  top: 658px;
-  left: calc(50% - 620px);
-  width: 398px;
+  top: clamp(560px, 45.7vw, 658px);
+  left: max(var(--page-gutter), calc(50% - min(43vw, 620px)));
+  width: clamp(280px, 27.6vw, 398px);
   z-index: 1;
 }
 
@@ -335,10 +407,10 @@ a.frame-link {
 
 .chef-mark {
   position: absolute;
-  top: 500px;
-  left: calc(50% - 610px);
+  top: clamp(420px, 34.7vw, 500px);
+  left: max(var(--page-gutter), calc(50% - min(42.4vw, 610px)));
   display: block;
-  width: 161px;
+  width: clamp(120px, 11.2vw, 161px);
   height: auto;
   z-index: 2;
 }
@@ -358,10 +430,10 @@ a.frame-link {
 .tee-overlay {
   position: absolute;
   top: calc(100% + 445px);
-  left: calc(50% - 59.5px);
+  left: calc(50% - clamp(24px, 4.1vw, 59.5px));
   display: block;
   z-index: 3;
-  width: 432px;
+  width: clamp(300px, 30vw, 432px);
   height: auto;
   max-width: none;
   pointer-events: none;
@@ -593,15 +665,55 @@ a.frame-link {
   justify-self: end;
 }
 
+@media (max-width: 1100px) and (min-width: 701px) {
+  .top-bar {
+    gap: 8px 24px;
+  }
+
+  .top-bar > .top-bar-link:first-child {
+    position: static;
+  }
+
+  .top-bar-links {
+    flex: 1 1 100%;
+    order: 2;
+  }
+
+  .site-shell {
+    min-height: 620px;
+  }
+
+  .frame-actions {
+    left: 50%;
+  }
+
+  .frame-tagline {
+    transform: none;
+  }
+
+  .floating-photo-2 .good-vibes-placement {
+    top: clamp(-340px, -26vw, -250px);
+    left: calc(50% + clamp(80px, 10vw, 130px));
+  }
+}
+
 @media (max-width: 700px) {
   .top-bar {
-    height: 40px;
+    height: auto;
+    min-height: 0;
     padding: 0 16px;
     justify-content: center;
   }
 
   .top-bar-links {
-    gap: 14px;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 2.2px;
+  }
+
+  .top-bar-links .top-bar-link {
+    padding: 1px 0;
+    line-height: 1.1;
   }
 
   .top-bar-link,
@@ -617,7 +729,7 @@ a.frame-link {
   }
 
   .site-shell {
-    min-height: calc(100vh - 40px);
+    min-height: 0;
   }
 
   /* --- Frame (Casa Fina logo block) --- */
@@ -633,15 +745,11 @@ a.frame-link {
     width: 52.08%;
   }
 
-  .logo-lines {
-    top: 138px;
-    width: calc(100% - 24px);
-    gap: 4px;
-  }
-
   .frame-actions {
-    top: 154px;
+    top: 60%;
     gap: 14px;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .frame-link,
@@ -649,6 +757,12 @@ a.frame-link {
   a.frame-link {
     font-size: 9px;
     letter-spacing: 1.6px;
+  }
+
+  .frame-tagline {
+    font-size: 9px;
+    letter-spacing: 1.4px;
+    transform: none;
   }
 
   .frame-action-divider {
@@ -821,5 +935,319 @@ a.frame-link {
   .contact-info {
     margin-top: 24px;
     font-size: 11px;
+  }
+}
+
+/* --- Menu section --- */
+.menu-section {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  padding: clamp(72px, 10vh, 110px) 16px 100vh;
+  color: #6e2432;
+  pointer-events: none;
+}
+
+.menu-section a,
+.menu-section button {
+  pointer-events: auto;
+}
+
+.menu-section__layout {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: clamp(32px, 5vw, 72px);
+  width: min(100%, 1120px);
+  margin: 0 auto;
+}
+
+/* The white ticket-style paper menu card */
+.menu-section__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 506px;
+  max-width: 100%;
+  margin: 0;
+  padding: 58px 38px 64px;
+  background: #ffffff;
+  transform: translate3d(0, var(--menu-card-parallax, 0px), 0);
+  will-change: transform;
+  -webkit-mask:
+    radial-gradient(circle 39px at 0 0, transparent 0 38px, #000 39px),
+    radial-gradient(circle 39px at 100% 0, transparent 0 38px, #000 39px),
+    radial-gradient(circle 39px at 0 100%, transparent 0 38px, #000 39px),
+    radial-gradient(circle 39px at 100% 100%, transparent 0 38px, #000 39px);
+  -webkit-mask-composite: source-in, source-in, source-in;
+  mask:
+    radial-gradient(circle 39px at 0 0, transparent 0 38px, #000 39px),
+    radial-gradient(circle 39px at 100% 0, transparent 0 38px, #000 39px),
+    radial-gradient(circle 39px at 0 100%, transparent 0 38px, #000 39px),
+    radial-gradient(circle 39px at 100% 100%, transparent 0 38px, #000 39px);
+  mask-composite: intersect;
+}
+
+.menu-panels {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 44px;
+}
+
+.menu-panel {
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  max-width: 640px;
+}
+
+.menu-panel::after {
+  content: none;
+}
+
+.menu-panel__title {
+  position: relative;
+  z-index: 2;
+  width: fit-content;
+  margin: 0 auto 26px;
+  padding: 0;
+  font-family: "Chango", cursive;
+  font-weight: 700;
+  font-size: 21px;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: #6e2432;
+  text-align: center;
+}
+
+.menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-item {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  background: #ffffff;
+  border: 0;
+  padding: 0;
+}
+
+.menu-item::before {
+  content: "";
+  order: 2;
+  flex: 1 1 auto;
+  min-width: 34px;
+  border-bottom: 1px dotted #6e2432;
+  transform: translateY(-3px);
+}
+
+.menu-item + .menu-item {
+  margin-top: 9px;
+}
+
+.menu-item__name {
+  order: 1;
+  flex: 0 1 auto;
+  max-width: 310px;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 700;
+  font-size: 10px;
+  line-height: 1.35;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #6e2432;
+}
+
+.menu-item__price {
+  order: 3;
+  flex: none;
+  width: 28px;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 700;
+  font-size: 10px;
+  line-height: 1.35;
+  letter-spacing: 0.04em;
+  color: #6e2432;
+  text-align: right;
+}
+
+.menu-section__footer {
+  display: none;
+}
+
+.menu-info-card {
+  position: relative;
+  flex: 0 0 min(420px, 36vw);
+  margin-top: 200px;
+  padding: 34px 36px 32px;
+  background: #52673f;
+  color: #ffe6b7;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transform: translate3d(0, var(--menu-info-parallax, 0px), 0);
+  will-change: transform;
+}
+
+.menu-info-card__section + .menu-info-card__section {
+  margin-top: 36px;
+}
+
+.menu-info-card__title {
+  margin: 0 0 6px;
+  font-family: "Chango", cursive;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.menu-info-card__subtitle,
+.menu-info-card p {
+  margin: 0;
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.menu-info-card p + p {
+  margin-top: 5px;
+}
+
+.menu-info-card a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.menu-info-card__hours {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin: 14px 0 0;
+}
+
+.menu-info-card__hours div {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.menu-info-card__hours div::before {
+  content: "";
+  order: 2;
+  flex: 1 1 auto;
+  border-bottom: 2px dotted currentColor;
+  transform: translateY(-4px);
+}
+
+.menu-info-card__hours dt {
+  order: 1;
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.menu-info-card__hours dd {
+  order: 3;
+  margin: 0;
+  font-size: 10px;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.menu-info-card a.menu-info-card__button {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: #ffe6b7;
+  border-radius: 3px;
+  color: rgba(82, 103, 63, 1);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.menu-section__mark {
+  display: inline-block;
+  width: 34px;
+  height: 43px;
+  margin-bottom: 18px;
+  background: #6e2432;
+  -webkit-mask: url("footer-logo.png") center / contain no-repeat;
+  mask: url("footer-logo.png") center / contain no-repeat;
+}
+
+.menu-section__footnote {
+  margin: 4px 0 0;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #6e2432;
+}
+
+@media (min-width: 981px) {
+  #hours-reservation {
+    flex-basis: 300px;
+    width: 300px;
+  }
+}
+
+@media (max-width: 980px) {
+  .menu-section__layout {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .menu-section__inner,
+  .menu-info-card {
+    transform: none;
+    will-change: auto;
+  }
+
+  .menu-info-card {
+    flex-basis: auto;
+    width: min(100%, 506px);
+    margin-top: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-section__inner,
+  .menu-info-card {
+    transform: none;
+    will-change: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .menu-info-card {
+    padding: 30px 26px 28px;
+  }
+
+  .menu-info-card__title {
+    font-size: 14px;
+  }
+
+  .menu-info-card__subtitle,
+  .menu-info-card p,
+  .menu-info-card__hours dt {
+    font-size: 10px;
+  }
+
+  .menu-info-card__hours dd {
+    font-size: 10px;
   }
 }
