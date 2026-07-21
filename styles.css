@@ -708,7 +708,7 @@ a.frame-link {
   .top-bar-links {
     flex-direction: column;
     flex-wrap: nowrap;
-    gap: 2.2px;
+    gap: 6px;
   }
 
   .top-bar-links .top-bar-link {
@@ -718,7 +718,7 @@ a.frame-link {
 
   .top-bar-link,
   .top-bar .top-bar-link {
-    font-size: 9px;
+    font-size: 12px;
     letter-spacing: 1.4px;
   }
 
@@ -730,6 +730,17 @@ a.frame-link {
 
   .site-shell {
     min-height: 0;
+  }
+
+  .page-footer {
+    position: fixed;
+    right: 0;
+    bottom: 20px;
+    left: 0;
+    z-index: 20;
+    margin-bottom: 0;
+    padding: 0 16px;
+    pointer-events: auto;
   }
 
   /* --- Frame (Casa Fina logo block) --- */
