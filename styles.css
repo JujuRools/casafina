@@ -698,6 +698,10 @@ a.frame-link {
 }
 
 @media (max-width: 700px) {
+  [data-scroll-section] {
+    height: 100dvh;
+  }
+
   .top-bar {
     height: auto;
     min-height: 0;
