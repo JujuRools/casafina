@@ -4,10 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite --host 127.0.0.1"
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "vite build && wrangler deploy"
   },
   "devDependencies": {
-    "vite": "^8.0.10"
+    "vite": "^8.0.10",
+    "wrangler": "^4.112.0"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.2.7",
