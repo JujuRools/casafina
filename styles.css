@@ -65,7 +65,24 @@ body {
   background: #6e2432;
 }
 
-.top-bar > .top-bar-link:first-child {
+.site-announcement {
+  margin: 0;
+  color: #ffe6b7;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(13px, 1.2vw, 17px);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* Temporary pre-opening state: keep nav and scroll content in the source. */
+.top-bar .top-bar-links,
+.menu-section {
+  display: none;
+}
+
+.top-bar > .top-bar-link--instagram {
   position: absolute;
   left: var(--page-gutter);
 }
@@ -670,8 +687,9 @@ a.frame-link {
     gap: 8px 24px;
   }
 
-  .top-bar > .top-bar-link:first-child {
-    position: static;
+  .top-bar > .top-bar-link--instagram {
+    position: absolute;
+    left: var(--page-gutter);
   }
 
   .top-bar-links {
@@ -726,10 +744,9 @@ a.frame-link {
     letter-spacing: 1.4px;
   }
 
-  /* Hide the "Follow us" link on the left of the top bar to mirror the
-     screenshot which shows two CONTACT US-style links on the right. */
-  .top-bar > .top-bar-link:first-child {
-    display: none;
+  /* Keep Instagram visible during the temporary pre-opening state. */
+  .top-bar > .top-bar-link--instagram {
+    display: inline-flex;
   }
 
   .site-shell {
