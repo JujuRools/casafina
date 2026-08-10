@@ -721,10 +721,13 @@ a.frame-link {
   }
 
   .top-bar {
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
     height: auto;
     min-height: 0;
     padding: 0 16px;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .top-bar-links {
@@ -746,7 +749,14 @@ a.frame-link {
 
   /* Keep Instagram visible during the temporary pre-opening state. */
   .top-bar > .top-bar-link--instagram {
+    position: static;
+    order: 1;
     display: inline-flex;
+  }
+
+  .site-announcement {
+    order: 2;
+    text-align: center;
   }
 
   .site-shell {
