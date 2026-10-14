@@ -1002,7 +1002,8 @@ a.frame-link {
   margin: 0;
   padding: 58px 38px 64px;
   background: #ffffff;
-  transform: translate3d(var(--menu-enter-x, 0px), var(--menu-card-parallax, 0px), 0);
+  transform: translate3d(var(--menu-enter-x, 0px), var(--menu-card-parallax, 0px), 0) rotate(var(--menu-enter-angle, 0deg));
+  transform-origin: top left;
   will-change: transform;
   -webkit-mask:
     radial-gradient(circle 39px at 0 0, transparent 0 38px, #000 39px),
@@ -1284,5 +1285,12 @@ a.frame-link {
 
   .menu-info-card__hours dd {
     font-size: 10px;
+  }
+}
+
+/* A small menu preview at the lower left of the desktop hero. */
+@media (min-width: 981px) and (prefers-reduced-motion: no-preference) {
+  .menu-section {
+    margin-top: -190px;
   }
 }

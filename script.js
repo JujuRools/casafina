@@ -109,6 +109,7 @@ function updateMenuParallax() {
     menuCard?.style.removeProperty("--menu-card-parallax");
     menuInfoCard?.style.removeProperty("--menu-info-parallax");
     menuCard?.style.removeProperty("--menu-enter-x");
+    menuCard?.style.removeProperty("--menu-enter-angle");
     menuInfoCard?.style.removeProperty("--menu-enter-x");
     return;
   }
@@ -123,15 +124,16 @@ function updateMenuParallax() {
   const centeredProgress = progress - 0.5;
 
   // Each card settles into its original position as it enters the viewport.
-  for (const [card, verticalProperty] of [
-    [menuCard, "--menu-card-parallax"],
-    [menuInfoCard, "--menu-info-parallax"],
-  ]) {
-    const currentY = parseFloat(card.style.getPropertyValue(verticalProperty)) || 0;
-    const cardTop = card.getBoundingClientRect().top - currentY;
-    const entrance = clamp((viewportHeight - cardTop) / (viewportHeight * 0.65), 0, 1);
+  for (const card of [menuCard, menuInfoCard]) {
+    const cardTop = rect.top + (parseFloat(getComputedStyle(card).marginTop) || 0);
+    const entrance = card === menuCard
+      ? clamp(window.scrollY / (viewportHeight * 0.65), 0, 1)
+      : clamp((viewportHeight - cardTop) / (viewportHeight * 0.65), 0, 1);
     const distance = Math.min(window.innerWidth * 0.18, 240);
     const direction = card === menuCard ? -1 : 1;
+    if (card === menuCard) {
+      card.style.setProperty("--menu-enter-angle", `${8 * Math.pow(1 - entrance, 3)}deg`);
+    }
     card.style.setProperty("--menu-enter-x", `${direction * distance * Math.pow(1 - entrance, 3)}px`);
   }
 
