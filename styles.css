@@ -84,11 +84,12 @@ body {
   gap: 8px;
 }
 
-.top-bar-link--instagram svg path {
-  stroke: #bc8b8c;
-  stroke-width: 0.4;
-  stroke-linejoin: round;
+.top-bar-link--instagram svg {
+  color: inherit;
+  stroke-width: 2.5;
+  opacity: 0.6;
 }
+
 
 .top-bar-links {
   display: flex;
@@ -1001,7 +1002,7 @@ a.frame-link {
   margin: 0;
   padding: 58px 38px 64px;
   background: #ffffff;
-  transform: translate3d(0, var(--menu-card-parallax, 0px), 0);
+  transform: translate3d(var(--menu-enter-x, 0px), var(--menu-card-parallax, 0px), 0);
   will-change: transform;
   -webkit-mask:
     radial-gradient(circle 39px at 0 0, transparent 0 38px, #000 39px),
@@ -1096,7 +1097,7 @@ a.frame-link {
 }
 
 .menu-item__dish {
-  font-weight: 600;
+  font-weight: 700;
   color: #6e2432;
 }
 
@@ -1128,7 +1129,7 @@ a.frame-link {
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  transform: translate3d(0, var(--menu-info-parallax, 0px), 0);
+  transform: translate3d(var(--menu-enter-x, 0px), var(--menu-info-parallax, 0px), 0);
   will-change: transform;
 }
 
