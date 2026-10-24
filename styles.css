@@ -138,6 +138,9 @@ body {
 }
 
 .page-footer {
+  position: relative;
+  z-index: 7;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -162,7 +165,7 @@ body {
   z-index: 6;
   flex: 1;
   min-height: 0;
-  overflow-x: clip;
+  overflow: clip;
 }
 
 .frame-menu,
@@ -1293,4 +1296,11 @@ a.frame-link {
   .menu-section {
     margin-top: -190px;
   }
+}
+
+/* Keep contact lines readable when the viewport narrows. */
+.page-footer > .top-bar-link {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
