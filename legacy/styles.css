@@ -1,0 +1,1306 @@
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("fonts/ibm-plex-mono-latin-600-normal.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("fonts/ibm-plex-mono-latin-700-normal.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+:root {
+  color: #fff7f0;
+  background: #6e2432;
+  font-family: "IBM Plex Mono", monospace;
+  --page-gutter: clamp(16px, 3vw, 40px);
+  --hero-frame-scale: 1.536;
+  --hero-frame-width: clamp(380px, 42vw, 504px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: #6e2432;
+}
+
+/* Hero stays pinned while the menu section scrolls up over it */
+[data-scroll-section] {
+  position: sticky;
+  top: 0;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.top-bar {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  padding: 0 var(--page-gutter);
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background: #6e2432;
+}
+
+.top-bar > .top-bar-link:first-child {
+  position: absolute;
+  left: var(--page-gutter);
+}
+
+.top-bar-link--instagram {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.top-bar-link--instagram svg {
+  color: inherit;
+  stroke-width: 2.5;
+  opacity: 0.6;
+}
+
+
+.top-bar-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.top-bar-link {
+  color: #ffe6b7;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(12px, 1.12vw, 16px);
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.top-bar-link.top-bar-link--instagram {
+  font-family: inherit;
+  font-size: clamp(10px, 0.84vw, 12px);
+  font-weight: 500;
+}
+
+.top-bar a.top-bar-link:hover {
+  color: #ffffff;
+}
+
+.top-bar-links .top-bar-link {
+  padding: clamp(8px, 0.7vw, 10px) clamp(10px, 1.4vw, 20px);
+  border: 0;
+  border-radius: 3px;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(12px, 1.12vw, 16px);
+  font-weight: 600;
+}
+
+.top-bar-links .top-bar-link--solid {
+  position: absolute;
+  right: 40px;
+  background-color: #ffe6b7;
+  border-color: #ffe6b7;
+  color: #2a2a2a;
+}
+
+.page-footer {
+  position: relative;
+  z-index: 7;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  color: #ffe6b7;
+  font-size: clamp(10px, 0.84vw, 12px);
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+}
+
+.page-footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-shell {
+  position: relative;
+  z-index: 6;
+  flex: 1;
+  min-height: 0;
+  overflow: clip;
+}
+
+.frame-menu,
+.floating-photo-1,
+.floating-photo-1 > img:not(.our-mark):not(.chef-small-mark),
+.floating-photo img.our-mark,
+.floating-photo img.chef-small-mark,
+.floating-photo-2,
+.floating-photo-3,
+.floating-photo-3 > img,
+.floating-photo-3 .paper-block,
+.chef-mark,
+.tee-overlay {
+  animation: drift-in 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--intro-delay, 0ms);
+}
+
+.frame-menu {
+  --intro-x: 90px;
+  --intro-y: 110px;
+  --intro-delay: 300ms;
+}
+
+.floating-photo-1 {
+  --intro-x: -140px;
+  --intro-y: 90px;
+  --intro-delay: 260ms;
+}
+
+.floating-photo-1 > img:not(.our-mark):not(.chef-small-mark) {
+  --intro-x: -60px;
+  --intro-y: 40px;
+  --intro-delay: 340ms;
+}
+
+.floating-photo img.our-mark {
+  --intro-x: -70px;
+  --intro-y: -40px;
+  --intro-delay: 430ms;
+}
+
+.floating-photo img.chef-small-mark {
+  --intro-x: 70px;
+  --intro-y: 50px;
+  --intro-delay: 500ms;
+}
+
+.floating-photo-2 {
+  --intro-x: 150px;
+  --intro-y: 120px;
+  --intro-delay: 340ms;
+}
+
+.floating-photo-3 {
+  --intro-x: -120px;
+  --intro-y: 140px;
+  --intro-delay: 420ms;
+}
+
+.floating-photo-3 > img {
+  --intro-x: -70px;
+  --intro-y: 60px;
+  --intro-delay: 520ms;
+}
+
+.chef-mark {
+  --intro-x: -90px;
+  --intro-y: -120px;
+  --intro-delay: 500ms;
+}
+
+.tee-overlay {
+  --intro-x: 90px;
+  --intro-y: 130px;
+  --intro-delay: 540ms;
+}
+
+@keyframes drift-in {
+  from {
+    opacity: 0;
+    translate: var(--intro-x, 0) var(--intro-y, 0);
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frame-menu,
+  .floating-photo-1,
+  .floating-photo-1 > img:not(.our-mark):not(.chef-small-mark),
+  .floating-photo img.our-mark,
+  .floating-photo img.chef-small-mark,
+  .floating-photo-2,
+  .floating-photo-3,
+  .floating-photo-3 > img,
+  .floating-photo-3 .paper-block,
+  .chef-mark,
+  .tee-overlay {
+    animation: none;
+  }
+}
+
+.frame-placement {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--hero-frame-width);
+  max-width: none;
+  transform: translate(-50%, -50%) scale(var(--hero-frame-scale));
+  transform-origin: center;
+}
+
+.top-frame {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform: scale(1.56);
+  transform-origin: center;
+}
+
+.frame-logo {
+  position: absolute;
+  top: 5.95%;
+  left: 50%;
+  display: block;
+  width: calc(100% - 2rem);
+  max-width: calc(100% - 2rem);
+  height: auto;
+  transform: translateX(-50%);
+}
+
+.frame-actions {
+  position: absolute;
+  top: 85%;
+  left: 61.11%;
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  transform: translateX(-50%);
+}
+
+.frame-link {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #ffe6b7;
+  font: inherit;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+button.frame-link {
+  font-weight: 500;
+  letter-spacing: 2.4px;
+  white-space: nowrap;
+}
+
+a.frame-link {
+  font-weight: 500;
+  letter-spacing: 3px;
+  white-space: nowrap;
+}
+
+.frame-tagline {
+  color: #ffe6b7;
+  font-size: clamp(11px, 1.3vw, 15.6px);
+  font-weight: 500;
+  letter-spacing: clamp(1.6px, 0.25vw, 3px);
+  text-transform: uppercase;
+  transform: translateX(-30px);
+  white-space: nowrap;
+}
+
+.frame-action-divider {
+  width: 1px;
+  height: 26px;
+  background: #8b4b4d;
+}
+
+.frame-menu {
+  position: absolute;
+  top: calc(100% + 50px);
+  left: 50%;
+  display: block;
+  width: 213px;
+  height: auto;
+  transform-origin: center;
+  transform: translateX(-50%);
+  transition: transform 220ms ease;
+}
+
+.frame-menu:hover {
+  transform: translateX(-50%) scale(1.06) rotate(-3deg);
+}
+
+.floating-photo {
+  position: absolute;
+  will-change: transform;
+}
+
+.floating-photo-1 {
+  top: clamp(230px, 20.8vw, 300px);
+  left: max(var(--page-gutter), calc(50% - min(39.6vw, 570px)));
+  width: clamp(150px, 14.4vw, 208px);
+  z-index: 2;
+}
+
+.floating-photo-2 {
+  top: calc(100% + 250px);
+  left: calc(50% + clamp(120px, 14.3vw, 206.5px));
+  width: clamp(250px, 24vw, 346px);
+}
+
+.floating-photo-2 .good-vibes-placement {
+  position: absolute;
+  top: -340px;
+  left: calc(50% + 130px);
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.floating-photo-2 .good-vibes-mark {
+  width: 262px;
+  max-width: none;
+}
+
+.floating-photo-3 {
+  top: clamp(560px, 45.7vw, 658px);
+  left: max(var(--page-gutter), calc(50% - min(43vw, 620px)));
+  width: clamp(280px, 27.6vw, 398px);
+  z-index: 1;
+}
+
+.floating-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.floating-photo-1 img {
+  transform: rotate(-8deg);
+}
+
+.floating-photo img.our-mark {
+  position: absolute;
+  top: -60px;
+  left: -80px;
+  width: 113px;
+  transform: none;
+}
+
+.chef-mark {
+  position: absolute;
+  top: clamp(420px, 34.7vw, 500px);
+  left: max(var(--page-gutter), calc(50% - min(42.4vw, 610px)));
+  display: block;
+  width: clamp(120px, 11.2vw, 161px);
+  height: auto;
+  z-index: 2;
+}
+
+.floating-photo img.chef-small-mark {
+  position: absolute;
+  right: -90px;
+  bottom: -70px;
+  width: 131px;
+  transform: none;
+}
+
+.floating-photo-2 > img {
+  rotate: 3deg;
+}
+
+.tee-overlay {
+  position: absolute;
+  top: calc(100% + 445px);
+  left: calc(50% - clamp(24px, 4.1vw, 59.5px));
+  display: block;
+  z-index: 3;
+  width: clamp(300px, 30vw, 432px);
+  height: auto;
+  max-width: none;
+  pointer-events: none;
+}
+
+.floating-photo-3 img {
+  transform: rotate(-3.65deg);
+}
+
+.floating-photo-3 .gift-card {
+  position: absolute;
+  top: 523px;
+  left: 83px;
+  z-index: 2;
+  display: block;
+  width: 337px;
+  height: 239px;
+}
+
+.floating-photo-3 .gift-card img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  transform: none;
+}
+
+.floating-photo-3 .gift-card img.gift-card-inside {
+  z-index: 1;
+  top: 0;
+  left: 100px;
+  transform: none;
+}
+
+.floating-photo-3 .gift-card img.gift-card-top {
+  z-index: 2;
+}
+
+.floating-photo-3 .paper-block {
+  position: absolute;
+  top: 560px;
+  left: 295px;
+  z-index: 3;
+  width: 650px;
+  aspect-ratio: 650 / 954;
+  padding: 50px 60px 60px;
+  background-image: url("paper.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  --intro-x: 0px;
+  --intro-y: 200px;
+}
+
+.floating-photo-3 .paper-photo {
+  position: absolute;
+  top: 720px;
+  left: 805px;
+  z-index: 2;
+  display: block;
+  width: 340px;
+  max-width: none;
+  height: auto;
+  transform: rotate(5deg);
+}
+
+.floating-photo-3 .cheers-photo {
+  position: absolute;
+  top: 1120px;
+  left: 140px;
+  z-index: 2;
+  display: block;
+  width: 376px;
+  max-width: none;
+  height: auto;
+  rotate: -5deg;
+}
+
+.floating-photo-3 .paper-title {
+  margin: 30px 0 0;
+  font-family: "Chango", cursive;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+  color: #6e2432;
+}
+
+.floating-photo-3 .paper-copy + .paper-title {
+  margin-top: 50px;
+}
+
+.floating-photo-3 .paper-copy {
+  width: 450px;
+  max-width: 100%;
+  margin: 24px auto 0;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  text-align: center;
+  text-transform: uppercase;
+  color: #6e2432;
+}
+
+.site-footer {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  width: 100%;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 80px 60px;
+  background: #6e2432;
+  color: #ffe6b7;
+}
+
+.footer-contact {
+  display: grid;
+  gap: 28px;
+  width: 540px;
+  text-align: center;
+}
+
+.contact-rule {
+  display: grid;
+  gap: 6px;
+}
+
+.contact-rule span {
+  display: block;
+  height: 1px;
+  background: #8b4b4d;
+}
+
+.contact-title {
+  margin: 0;
+  font-family: "Chango", cursive;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.contact-info {
+  display: grid;
+  gap: 6px;
+  margin-top: 60px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.contact-label {
+  margin: 0;
+  font-weight: 700;
+}
+
+.contact-value {
+  margin: 0;
+  font-weight: 400;
+}
+
+.footer-logo {
+  display: block;
+  width: 52px;
+  height: auto;
+}
+
+.booking-modal {
+  width: min(90vw, 420px);
+  border: 1px solid #8b4b4d;
+  background: #6e2432;
+  color: #ffe6b7;
+}
+
+.booking-modal::backdrop {
+  background: rgba(38, 8, 16, 0.7);
+}
+
+.booking-form {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+  padding: 28px;
+}
+
+.booking-form h2 {
+  margin: 0;
+  font-size: 18px;
+  letter-spacing: 0.08em;
+}
+
+.booking-form label {
+  display: grid;
+  gap: 6px;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.booking-form input {
+  width: 100%;
+  border: 1px solid #8b4b4d;
+  background: #fff7f0;
+  color: #6e2432;
+  font: inherit;
+  padding: 10px;
+}
+
+.modal-close,
+.submit-booking {
+  border: 1px solid #8b4b4d;
+  background: transparent;
+  color: #ffe6b7;
+  font: inherit;
+  padding: 10px 12px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.modal-close {
+  justify-self: end;
+}
+
+@media (max-width: 1100px) and (min-width: 701px) {
+  .top-bar {
+    gap: 8px 24px;
+  }
+
+  .top-bar > .top-bar-link:first-child {
+    position: static;
+  }
+
+  .top-bar-links {
+    flex: 1 1 100%;
+    order: 2;
+  }
+
+  .site-shell {
+    min-height: 620px;
+  }
+
+  .frame-actions {
+    left: 50%;
+  }
+
+  .frame-tagline {
+    transform: none;
+  }
+
+  .floating-photo-2 .good-vibes-placement {
+    top: clamp(-340px, -26vw, -250px);
+    left: calc(50% + clamp(80px, 10vw, 130px));
+  }
+}
+
+@media (max-width: 700px) {
+  [data-scroll-section] {
+    height: 100dvh;
+  }
+
+  .top-bar {
+    height: auto;
+    min-height: 0;
+    padding: 0 16px;
+    justify-content: center;
+  }
+
+  .top-bar-links {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 6px;
+  }
+
+  .top-bar-links .top-bar-link {
+    padding: 1px 0;
+    line-height: 1.1;
+  }
+
+  .top-bar-link,
+  .top-bar .top-bar-link {
+    font-size: 12px;
+    letter-spacing: 1.4px;
+  }
+
+  /* Hide the "Follow us" link on the left of the top bar to mirror the
+     screenshot which shows two CONTACT US-style links on the right. */
+  .top-bar > .top-bar-link:first-child {
+    display: none;
+  }
+
+  .site-shell {
+    min-height: 0;
+  }
+
+  .page-footer {
+    position: fixed;
+    right: 0;
+    bottom: 20px;
+    left: 0;
+    z-index: 20;
+    margin-bottom: 0;
+    padding: 0 16px;
+    pointer-events: auto;
+  }
+
+  /* --- Frame (Casa Fina logo block) --- */
+  .frame-placement {
+    top: 50%;
+    width: min(100% - 24px, 376px);
+    max-width: none;
+    z-index: 10;
+  }
+
+  .frame-logo {
+    top: 28px;
+    width: 52.08%;
+  }
+
+  .frame-actions {
+    top: 60%;
+    gap: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .frame-link,
+  button.frame-link,
+  a.frame-link {
+    font-size: 9px;
+    letter-spacing: 1.6px;
+  }
+
+  .frame-tagline {
+    font-size: 9px;
+    letter-spacing: 1.4px;
+    transform: none;
+  }
+
+  .frame-action-divider {
+    height: 18px;
+  }
+
+  /* --- Row 1: paella photo (left) + Tapas Vida wine glasses (right) --- */
+  .floating-photo-1 {
+    top: 250px;
+    left: 12px;
+    width: 130px;
+  }
+
+  .floating-photo-1 > img:not(.our-mark):not(.chef-small-mark) {
+    display: none;
+  }
+
+  .floating-photo img.our-mark {
+    display: none;
+  }
+
+  .floating-photo img.chef-small-mark {
+    display: none;
+  }
+
+  /* The good-vibes-mark (TAPAS VIDA wine glasses) lives inside .floating-photo-2.
+     Reposition .floating-photo-2 so the wine glasses sit top-right and its photo
+     stacks just below the paella photo. */
+  .floating-photo-2 {
+    top: 290px;
+    left: auto;
+    right: 12px;
+    width: 150px;
+  }
+
+  .floating-photo-2 > img {
+    width: 195px;
+    margin-top: 280px;
+  }
+
+  .floating-photo-2 .good-vibes-placement {
+    top: -90px;
+    left: 50%;
+  }
+
+  .floating-photo-2 .good-vibes-mark {
+    width: 215px;
+  }
+
+  /* --- Row 2: menu (left) sits beneath the paella photo --- */
+  .frame-menu {
+    top: 440px;
+    bottom: auto;
+    left: 50%;
+    width: 172px;
+    z-index: 10;
+  }
+
+  /* Hide the chef "Erind" callout on mobile to keep the composition clean. */
+  .chef-mark {
+    display: none;
+  }
+
+  /* --- T-shirt overlay --- */
+  .tee-overlay {
+    top: auto;
+    bottom: -760px;
+    left: calc(50% - 120px);
+    width: 280px;
+    transform: translateX(-50%) scaleX(-1);
+  }
+
+  /* --- Floating photo 3 group (gift card, paper block, photos) --- */
+  .floating-photo-3 {
+    top: 800px;
+    left: 0;
+    right: 0;
+    margin-inline: auto;
+    width: min(100% - 24px, 376px);
+  }
+
+  .floating-photo-3 > img {
+    display: block;
+    position: relative;
+    top: -550px;
+    left: -150px;
+    width: 80%;
+    z-index: 0;
+  }
+
+  .floating-photo-3 .gift-card {
+    top: 50px;
+    left: auto;
+    right: 30px;
+    width: 200px;
+    height: auto;
+    aspect-ratio: 337 / 239;
+    transform: rotate(40deg);
+    z-index: 4;
+  }
+
+  .floating-photo-3 .gift-card img.gift-card-inside {
+    left: 56px;
+  }
+
+  /* Paper block becomes the centerpiece - full width on mobile. */
+  .floating-photo-3 .paper-block {
+    top: 180px;
+    left: 0;
+    right: 0;
+    margin-inline: auto;
+    width: calc(100% - 48px);
+    aspect-ratio: auto;
+    padding: 44px 36px 56px;
+  }
+
+  .floating-photo-3 .paper-title {
+    margin-top: 18px;
+    font-size: 14px;
+  }
+
+  .floating-photo-3 .paper-copy + .paper-title {
+    margin-top: 30px;
+  }
+
+  .floating-photo-3 .paper-copy {
+    width: 100%;
+    margin-top: 16px;
+    font-size: 9px;
+    line-height: 1.7;
+  }
+
+  /* Bottom photo (cheers/wine) sits below the paper. */
+  .floating-photo-3 .paper-photo {
+    top: auto;
+    bottom: -240px;
+    left: 50%;
+    width: 180px;
+    transform: translate(-50%, 0) rotate(5deg);
+  }
+
+  .floating-photo-3 .cheers-photo {
+    top: auto;
+    bottom: -260px;
+    left: 50%;
+    width: 220px;
+    transform: translate(-50%, 0);
+    rotate: -5deg;
+  }
+
+  /* --- Footer --- */
+  .site-footer {
+    flex-direction: column;
+    gap: 20px;
+    padding: 50px 20px 40px;
+  }
+
+  .footer-contact {
+    width: 100%;
+  }
+
+  .footer-contact[aria-hidden="true"] {
+    display: none;
+  }
+
+  .footer-logo {
+    width: 44px;
+  }
+
+  .contact-info {
+    margin-top: 24px;
+    font-size: 11px;
+  }
+}
+
+/* --- Menu section --- */
+.menu-section {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  padding: clamp(72px, 10vh, 110px) 16px 100vh;
+  color: #6e2432;
+  pointer-events: none;
+}
+
+.menu-section a,
+.menu-section button {
+  pointer-events: auto;
+}
+
+.menu-section__layout {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: clamp(32px, 5vw, 72px);
+  width: min(100%, 1120px);
+  margin: 0 auto;
+}
+
+/* The white ticket-style paper menu card */
+.menu-section__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 506px;
+  max-width: 100%;
+  margin: 0;
+  padding: 58px 38px 64px;
+  background: #ffffff;
+  transform: translate3d(var(--menu-enter-x, 0px), var(--menu-card-parallax, 0px), 0) rotate(var(--menu-enter-angle, 0deg));
+  transform-origin: top left;
+  will-change: transform;
+  -webkit-mask:
+    radial-gradient(circle 39px at 0 0, transparent 0 38px, #000 39px),
+    radial-gradient(circle 39px at 100% 0, transparent 0 38px, #000 39px),
+    radial-gradient(circle 39px at 0 100%, transparent 0 38px, #000 39px),
+    radial-gradient(circle 39px at 100% 100%, transparent 0 38px, #000 39px);
+  -webkit-mask-composite: source-in, source-in, source-in;
+  mask:
+    radial-gradient(circle 39px at 0 0, transparent 0 38px, #000 39px),
+    radial-gradient(circle 39px at 100% 0, transparent 0 38px, #000 39px),
+    radial-gradient(circle 39px at 0 100%, transparent 0 38px, #000 39px),
+    radial-gradient(circle 39px at 100% 100%, transparent 0 38px, #000 39px);
+  mask-composite: intersect;
+}
+
+.menu-panels {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 44px;
+}
+
+.menu-panel {
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  max-width: 640px;
+}
+
+.menu-panel::after {
+  content: none;
+}
+
+.menu-panel__title {
+  position: relative;
+  z-index: 2;
+  width: fit-content;
+  margin: 0 auto 26px;
+  padding: 0;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 700;
+  font-size: 21px;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: #6e2432;
+  text-align: center;
+}
+
+.menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-item {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  background: #ffffff;
+  border: 0;
+  padding: 0;
+}
+
+.menu-item::before {
+  content: "";
+  order: 2;
+  flex: 1 1 auto;
+  min-width: 34px;
+  border-bottom: 1px dotted #6e2432;
+  transform: translateY(-3px);
+}
+
+.menu-item + .menu-item {
+  margin-top: 9px;
+}
+
+.menu-item__name {
+  order: 1;
+  flex: 0 1 auto;
+  max-width: 310px;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 1.35;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #6e2432;
+}
+
+.menu-item__dish {
+  font-weight: 700;
+  color: #6e2432;
+}
+
+.menu-item__price {
+  order: 3;
+  flex: none;
+  width: 28px;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 1.35;
+  letter-spacing: 0.04em;
+  color: #6e2432;
+  text-align: right;
+}
+
+.menu-section__footer {
+  display: none;
+}
+
+.menu-info-card {
+  position: relative;
+  flex: 0 0 min(420px, 36vw);
+  margin-top: 200px;
+  padding: 34px 36px 32px;
+  background: #52673f;
+  color: #ffe6b7;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transform: translate3d(var(--menu-enter-x, 0px), var(--menu-info-parallax, 0px), 0);
+  will-change: transform;
+}
+
+.menu-info-card__section + .menu-info-card__section {
+  margin-top: 36px;
+}
+
+.menu-info-card__title {
+  margin: 0 0 6px;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.menu-info-card__subtitle,
+.menu-info-card p {
+  margin: 0;
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.menu-info-card p + p {
+  margin-top: 5px;
+}
+
+.menu-info-card a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.menu-info-card__hours {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin: 14px 0 0;
+}
+
+.menu-info-card__hours div {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.menu-info-card__hours div::before {
+  content: "";
+  order: 2;
+  flex: 1 1 auto;
+  border-bottom: 2px dotted currentColor;
+  transform: translateY(-4px);
+}
+
+.menu-info-card__hours dt {
+  order: 1;
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.menu-info-card__hours dd {
+  order: 3;
+  margin: 0;
+  font-size: 10px;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.menu-info-card a.menu-info-card__button {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: #ffe6b7;
+  border-radius: 3px;
+  color: rgba(82, 103, 63, 1);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.menu-section__mark {
+  display: inline-block;
+  width: 34px;
+  height: 43px;
+  margin-bottom: 18px;
+  background: #6e2432;
+  -webkit-mask: url("footer-logo.png") center / contain no-repeat;
+  mask: url("footer-logo.png") center / contain no-repeat;
+}
+
+.menu-section__footnote {
+  margin: 4px 0 0;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #6e2432;
+}
+
+@media (min-width: 981px) {
+  #hours-reservation {
+    flex-basis: 300px;
+    width: 300px;
+  }
+}
+
+@media (max-width: 980px) {
+  .menu-section__layout {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .menu-section__inner,
+  .menu-info-card {
+    transform: none;
+    will-change: auto;
+  }
+
+  .menu-info-card {
+    flex-basis: auto;
+    width: min(100%, 506px);
+    margin-top: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-section__inner,
+  .menu-info-card {
+    transform: none;
+    will-change: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .menu-info-card {
+    padding: 30px 26px 28px;
+  }
+
+  .menu-info-card__title {
+    font-size: 14px;
+  }
+
+  .menu-info-card__subtitle,
+  .menu-info-card p,
+  .menu-info-card__hours dt {
+    font-size: 10px;
+  }
+
+  .menu-info-card__hours dd {
+    font-size: 10px;
+  }
+}
+
+/* A small menu preview at the lower left of the desktop hero. */
+@media (min-width: 981px) and (prefers-reduced-motion: no-preference) {
+  .menu-section {
+    margin-top: -190px;
+  }
+}
+
+/* Keep contact lines readable when the viewport narrows. */
+.page-footer > .top-bar-link {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
