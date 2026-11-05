@@ -189,7 +189,7 @@ function measureMomentsTravel() {
   }
   // Three separate scroll intervals, then the menu follows the cleared stack.
   momentsExitTravel = Math.min(480, window.innerHeight * 0.55);
-  moments.style.setProperty('--moments-scroll-height', `${window.innerHeight + momentsExitTravel * 3}px`);
+  moments.style.setProperty('--moments-scroll-height', `${window.innerHeight + momentsExitTravel * 1.6}px`);
   const photoRadius = Math.max(...momentCards.map(card => Math.hypot(card.offsetWidth, card.offsetHeight) / 2));
   const safeAdvance = Math.max(0, window.innerHeight / 2 - photoRadius + momentsExitTravel - 80);
   // On tall screens, bring the menu into view as the final photo starts leaving.
@@ -210,20 +210,33 @@ function updateMoments() {
   const scrollTravel = Math.max(0, -moments.getBoundingClientRect().top);
   const interval = momentsExitTravel || Math.min(480, h * .55);
   momentCards.forEach((card, index) => {
-    // Front-to-back order: left video, right video, center photo.
-    const order = [0, 2, 1][index];
-    const progress = clamp((scrollTravel - order * interval) / interval, 0, 1);
-    const previousProgress = order === 0 ? 1
-      : clamp((scrollTravel - (order - 1) * interval) / interval, 0, 1);
-    const scale = order === 0 ? 1 : .94 + .06 * previousProgress;
-    const enter = clamp((performance.now() - momentsEntranceStart - [2, 0, 1][index] * 50) / 800, 0, 1);
-    const remaining = Math.pow(1 - enter, 3) * (1 - clamp(scrollTravel / interval, 0, 1));
-    const introOffset = remaining * (h * 1.15 + card.offsetHeight / 2);
-    const exitDistance = h * .5 + Math.hypot(card.offsetWidth, card.offsetHeight) / 2 + 40;
-    card.style.setProperty('--moment-y', `${introOffset - progress * exitDistance}px`);
-    card.style.setProperty('--moment-x', `${(index === 0 ? -1 : 1) * remaining * 150}px`);
-    card.style.setProperty('--moment-scroll-angle', `${[-6, -5, 6][index] * progress}deg`);
-    card.style.setProperty('--moment-scale', scale);
+    const spreadProgress = clamp(scrollTravel / interval, 0, 1);
+    const spread = 1 - Math.pow(1 - spreadProgress, 3);
+    // Once aligned, match normal page scrolling. After the sticky stage releases,
+    // its own movement carries the row so the offset must stop accumulating.
+    const stickyTravel = Math.max(0, moments.offsetHeight - h);
+    const rowTravel = Math.min(Math.max(0, scrollTravel - interval), Math.max(0, stickyTravel - interval));
+    // Deal from the upper left, upper right, then lower left, back to front.
+    const dealOrder = [2, 0, 1][index];
+    const elapsed = performance.now() - momentsEntranceStart - dealOrder * 180;
+    const enter = clamp(elapsed / 950, 0, 1);
+    const scrollBlend = 1 - clamp(scrollTravel / interval, 0, 1);
+    const landed = 1 - Math.pow(1 - enter, 3);
+    const remaining = (1 - landed) * scrollBlend;
+    const w = window.innerWidth;
+    const reachX = w / 2 + card.offsetWidth;
+    const reachY = h / 2 + card.offsetHeight;
+    const fromX = [-reachX, -reachX, reachX][index];
+    const fromY = [reachY, -reachY, -reachY * .75][index];
+    const lift = 0;
+    card.style.setProperty('--moment-y', `${fromY * remaining - rowTravel}px`);
+    const spacing = Math.max(0, Math.min(card.offsetWidth + 24, (w - card.offsetWidth) / 2 - 24));
+    card.style.setProperty('--moment-x', `${fromX * remaining + [-1, 1, 0][index] * spacing * spread}px`);
+    card.style.setProperty('--moment-scroll-angle', `${[-184, 177, -176][index] * remaining + [-4, -3, 4][index] * landed * (1 - spread) + [7, 2, -7][index] * spread}deg`);
+    card.style.setProperty('--moment-scale', 1);
+    card.style.setProperty('--toss-visible', elapsed >= 0 || scrollTravel > 0 ? 1 : 0);
+    card.style.setProperty('--toss-shadow-y', '0px');
+    card.style.setProperty('--toss-shadow-blur', '0px');
   });
 }
 let momentsTicking = false;
@@ -241,7 +254,7 @@ function startMomentsEntrance() {
   momentsEntranceStart = performance.now() + 120;
   function animateMoments(now) {
     updateMoments();
-    if (now < momentsEntranceStart + 1000) requestAnimationFrame(animateMoments);
+    if (now < momentsEntranceStart + 1400) requestAnimationFrame(animateMoments);
   }
   requestAnimationFrame(animateMoments);
 }
@@ -287,7 +300,7 @@ function updateMenuStack() {
     : 0;
   const distance = Math.min(160, Math.max(0, (window.innerWidth - 880) / 2));
   const reveal = active
-    ? clamp((window.innerHeight * .92 - rect.top) / (window.innerHeight * .55), 0, 1)
+    ? clamp((window.innerHeight - rect.top) / (window.innerHeight * .55), 0, 1)
     : 1;
   const unrevealed = Math.pow(1 - reveal, 3);
   menuStack.style.setProperty('--sheet-tuck-left', `${195 * unrevealed}px`);
@@ -297,6 +310,7 @@ function updateMenuStack() {
   menuStack.style.setProperty('--sheet-unturn-right', `${-2 * unrevealed}deg`);
   menuStack.style.setProperty('--sheet-spread', `${distance * progress}px`);
   menuStack.style.setProperty('--sheet-turn', `${2 * progress}deg`);
+  menuStack.style.setProperty('--gift-card-turn', `${-14 * progress}deg`);
   menuStack.style.setProperty('--sheet-center-y', `${-90 * progress}px`);
 }
 function scheduleMenuStack() {
@@ -318,10 +332,10 @@ function updateVisitCards() {
   const h = window.innerHeight;
   const travel = Math.max(0, h - rect.top);
   visitCards.querySelectorAll('.visit-card').forEach((card, index) => {
-    const progress = clamp((travel - index * 80) / (h * .8), 0, 1);
-    const entrance = 70 * Math.pow(1 - progress, 3);
-    const drift = Math.max(0, travel - h * .6) * (index === 0 ? .14 : .26);
-    card.style.setProperty('--visit-y', `${active ? entrance + Math.min(drift, index === 0 ? 110 : 180) : 0}px`);
+    // Constant scroll rates from entry onward: yellow moves at 94% of
+    // page speed, green at 66%, without a delayed start or a capped drift.
+    const drift = travel * (index === 0 ? .06 : .34);
+    card.style.setProperty('--visit-y', `${active ? drift : 0}px`);
   });
 }
 function scheduleVisitCards() {
@@ -345,10 +359,13 @@ function updateAboutPhotos() {
     const reveal = clamp((h * .92 - rect.top) / (h * .55), 0, 1);
     const easedReveal = 1 - Math.pow(1 - reveal, 3);
     const active = !reduceMotion.matches && window.innerWidth > 800;
-    // Reveal from beneath the letter, then drift gently while staying tucked behind it.
-    photo.style.setProperty('--about-photo-spread', `${active ? -65 * (1 - easedReveal) + 70 * progress : 0}px`);
+    // Continue drifting outward with the rotation after the reveal.
+    const outwardTravel = Math.max(0, h * .92 - rect.top);
+    photo.style.setProperty('--about-photo-spread', `${active ? -65 * (1 - easedReveal) + outwardTravel * .08 : 0}px`);
     photo.style.setProperty('--about-photo-reveal-turn', `${active ? easedReveal : 1}`);
-    photo.style.setProperty('--about-photo-turn', `${active ? 7 * progress : 0}deg`);
+    // Continue rotating with scroll even after the initial reveal has finished.
+    const rotationTravel = Math.max(0, h * .92 - rect.top);
+    photo.style.setProperty('--about-photo-turn', `${active ? rotationTravel * .015 : 0}deg`);
   });
 }
 

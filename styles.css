@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Letters Home";
-  src: url("fonts/LettersHome-Regular.otf") format("opentype");
+  src: url("/fonts/LettersHome-Regular.otf") format("opentype");
   font-style: normal;
   font-weight: 400;
   font-display: swap;
@@ -8,7 +8,7 @@
 
 @font-face {
   font-family: "IBM Plex Mono";
-  src: url("fonts/ibm-plex-mono-latin-600-normal.woff2") format("woff2");
+  src: url("/fonts/ibm-plex-mono-latin-600-normal.woff2") format("woff2");
   font-style: normal;
   font-weight: 600;
   font-display: swap;
@@ -16,7 +16,7 @@
 
 @font-face {
   font-family: "IBM Plex Mono";
-  src: url("fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2");
+  src: url("/fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2");
   font-style: normal;
   font-weight: 400;
   font-display: swap;
@@ -24,7 +24,7 @@
 
 @font-face {
   font-family: "IBM Plex Mono";
-  src: url("fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2");
+  src: url("/fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2");
   font-style: normal;
   font-weight: 500;
   font-display: swap;
@@ -32,7 +32,7 @@
 
 @font-face {
   font-family: "IBM Plex Mono";
-  src: url("fonts/ibm-plex-mono-latin-700-normal.woff2") format("woff2");
+  src: url("/fonts/ibm-plex-mono-latin-700-normal.woff2") format("woff2");
   font-style: normal;
   font-weight: 700;
   font-display: swap;
@@ -509,7 +509,7 @@ a.frame-link {
   width: 650px;
   aspect-ratio: 650 / 954;
   padding: 50px 60px 60px;
-  background-image: url("paper.png");
+  background-image: url("/paper.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   --intro-x: 0px;
@@ -1221,8 +1221,8 @@ a.frame-link {
   height: 43px;
   margin-bottom: 18px;
   background: #6e2432;
-  -webkit-mask: url("footer-logo.png") center / contain no-repeat;
-  mask: url("footer-logo.png") center / contain no-repeat;
+  -webkit-mask: url("/footer-logo.png") center / contain no-repeat;
+  mask: url("/footer-logo.png") center / contain no-repeat;
 }
 
 .menu-section__footnote {
@@ -1329,6 +1329,8 @@ a.frame-link {
   overflow: visible;
 }
 .moment {
+  display: flex;
+  flex-direction: column;
   position: absolute;
   width: min(27.64vw, 398px);
   aspect-ratio: 398 / 518;
@@ -1341,10 +1343,11 @@ a.frame-link {
 .moment--left { left: calc(5% + 20px); top: 43%; --moment-angle: -7deg; }
 .moment--center { left: 41%; top: 12%; width: min(24vw, 346px); --moment-angle: 3deg; }
 .moment--right { right: 5%; top: 47%; --moment-angle: 7deg; }
-.moment__media { position: relative; width: 100%; aspect-ratio: 378 / 430; overflow: hidden; }
+.moment__media { flex-shrink: 0; position: relative; width: 100%; aspect-ratio: 378 / 430; overflow: hidden; }
 .moment__media img, .moment__media video { display: block; width: 100%; height: 100%; object-fit: cover; }
 .moment__media .moment__photo--framed { height: 125%; width: 106%; max-width: none; margin: -3% 0 0 -3%; object-fit: cover; }
 .moment figcaption {
+  flex: 1;
   min-height: 58px;
   padding: 5px 0;
   display: flex;
@@ -1353,7 +1356,7 @@ a.frame-link {
   text-align: center;
   color: #6e2432;
   font-family: "Letters Home", cursive;
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 400;
   line-height: 1;
   letter-spacing: 0;
@@ -1373,7 +1376,7 @@ a.frame-link {
 html { overflow-x: clip; }
 
 /* Three-sheet menu, using the proportions of the supplied Figma sheets. */
-@font-face { font-family: "Chango"; src: url("fonts/Chango-Regular.ttf") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Chango"; src: url("/fonts/Chango-Regular.ttf") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
 .menu-section { margin-top: 0; padding-top: 100px; padding-bottom: 180px; overflow: visible; }
 .menu-section__layout { display: flex; flex-direction: column; align-items: center; width: min(100%, 1120px); gap: 90px; }
 .menu-stack { position: relative; width: 100%; height: 1021px; isolation: isolate; --sheet-width: 430px; }
@@ -1640,7 +1643,7 @@ html { overflow-x: clip; }
 
 /* Let the menu use spare space beneath the photo stack on tall displays. */
 @media (min-width: 981px) and (prefers-reduced-motion: no-preference) {
- .menu-section { margin-top: calc(-1 * var(--menu-photo-overlap, 0px)); }
+ .menu-section { margin-top: calc(180px - var(--menu-photo-overlap, 0px)); }
 }
 
 /* Keep both About photos behind the letter and fan them outward on scroll. */
@@ -1661,3 +1664,36 @@ html { overflow-x: clip; }
  .about-polaroid--left { transform: translateX(calc(-1 * var(--about-photo-spread, 0px))) rotate(calc(-7deg * var(--about-photo-reveal-turn, 1) - var(--about-photo-turn, 0deg))); }
  .about-polaroid--right { transform: translateX(var(--about-photo-spread, 0px)) rotate(calc(6deg * var(--about-photo-reveal-turn, 1) + var(--about-photo-turn, 0deg))); }
 }
+
+/* V3: airborne cards settle into the existing table-top stack. */
+@media (min-width: 981px) and (prefers-reduced-motion: no-preference) {
+ .moment { opacity: var(--toss-visible, 0); filter: drop-shadow(0 var(--toss-shadow-y, 0px) var(--toss-shadow-blur, 0px) rgba(0,0,0,.16)); }
+}
+
+/* Cream page links; preserve the original text colors inside all cards. */
+.top-bar .top-bar-link,
+.top-bar a.top-bar-link:hover,
+.page-footer,
+.page-footer .top-bar-link { color: #ffe6b7; }
+
+/* Gift card anchored to the menu stack, scrolling with the section. */
+.corner-gift-card {
+ position: absolute;
+ left: 28px;
+ bottom: 132px;
+ width: 344.3px;
+ max-width: calc(100% - 24px);
+ height: auto;
+ z-index: 8;
+ transform: rotate(calc(-7deg + var(--gift-card-turn, 0deg)));
+ filter: drop-shadow(0 4px 10px rgba(0,0,0,.15));
+}
+@media (max-width: 700px) {
+ .corner-gift-card { position: relative; align-self: flex-start; width: 344.3px; left: 12px; bottom: auto; margin: 15px 0; }
+}
+
+@media (min-width: 701px) and (max-width: 800px) {
+ .corner-gift-card { position: relative; align-self: flex-start; left: 12px; bottom: auto; margin: 15px 0; }
+}
+
+.about-polaroid__photo { display: block; width: 100%; aspect-ratio: 378 / 430; object-fit: cover; }
