@@ -1697,3 +1697,6 @@ html { overflow-x: clip; }
 }
 
 .about-polaroid__photo { display: block; width: 100%; aspect-ratio: 378 / 430; object-fit: cover; }
+
+/* Hero navigation and contact typography. */
+.top-bar, .top-bar .top-bar-link, .page-footer, .page-footer .top-bar-link { font-family: "IBM Plex Mono", monospace; }
