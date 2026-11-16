@@ -181,6 +181,13 @@ const momentScrollRates = [0.23, 0.42, 0.23];
 let momentsExitTravel = 0;
 function measureMomentsTravel() {
   if (!moments) return;
+  if (window.innerWidth <= 700 && !reduceMotion.matches) {
+    momentsExitTravel = Math.min(520, window.innerHeight * .65);
+    moments.style.setProperty('--moments-scroll-height', `${window.innerHeight + momentsExitTravel * 3}px`);
+    menuSection?.style.setProperty('--mobile-menu-advance', `${momentsExitTravel}px`);
+    menuSection?.style.removeProperty('--menu-photo-overlap');
+    return;
+  }
   if (reduceMotion.matches || !wideMenuLayout.matches) {
     moments.style.removeProperty('--moments-scroll-height');
     menuSection?.style.removeProperty('--menu-photo-overlap');
@@ -205,10 +212,16 @@ if (document.fonts) document.fonts.ready.then(measureMomentsTravel);
 const momentSizeObserver = new ResizeObserver(measureMomentsTravel);
 momentCards.forEach(card => momentSizeObserver.observe(card));
 function updateMoments() {
-  if (!moments || reduceMotion.matches || !wideMenuLayout.matches) return;
+  if (!moments || reduceMotion.matches || (!wideMenuLayout.matches && window.innerWidth > 700)) return;
   const h = window.innerHeight;
   const scrollTravel = Math.max(0, -moments.getBoundingClientRect().top);
   const interval = momentsExitTravel || Math.min(480, h * .55);
+  // The last card and menu share the exact same start in scroll space.
+  if (window.innerWidth <= 700) {
+    const lastExitStart = interval * 2;
+    const beforeLastExit = Math.max(0, lastExitStart - scrollTravel);
+    menuSection?.style.setProperty('--mobile-menu-enter-offset', `${beforeLastExit}px`);
+  }
   momentCards.forEach((card, index) => {
     const spreadProgress = clamp(scrollTravel / interval, 0, 1);
     const spread = 1 - Math.pow(1 - spreadProgress, 3);
@@ -228,6 +241,15 @@ function updateMoments() {
     const reachY = h / 2 + card.offsetHeight;
     const fromX = [-reachX, -reachX, reachX][index];
     const fromY = [reachY, -reachY, -reachY * .75][index];
+    if (window.innerWidth <= 700) {
+      const order = [0, 2, 1][index];
+      const exit = clamp(scrollTravel / interval - order, 0, 1);
+      card.style.setProperty('--moment-y', `${fromY * remaining - exit * (h + card.offsetHeight)}px`);
+      card.style.setProperty('--moment-x', `${fromX * remaining + [-1, 1, 1][index] * exit * 45}px`);
+      card.style.setProperty('--moment-scroll-angle', `${[-184, 177, -176][index] * remaining + [-1, 1, 1][index] * exit * 16}deg`);
+      card.style.setProperty('--toss-visible', elapsed >= 0 || scrollTravel > 0 ? 1 : 0);
+      return;
+    }
     const lift = 0;
     card.style.setProperty('--moment-y', `${fromY * remaining - rowTravel}px`);
     const spacing = Math.max(0, Math.min(card.offsetWidth + 24, (w - card.offsetWidth) / 2 - 24));
@@ -332,10 +354,13 @@ function updateVisitCards() {
   const h = window.innerHeight;
   const travel = Math.max(0, h - rect.top);
   visitCards.querySelectorAll('.visit-card').forEach((card, index) => {
-    // Constant scroll rates from entry onward: yellow moves at 94% of
-    // page speed, green at 66%, without a delayed start or a capped drift.
-    const drift = travel * (index === 0 ? .06 : .34);
+    // A subtle, consistent speed difference keeps the cards together.
+    const drift = travel * (index === 0 ? .02 : .08);
     card.style.setProperty('--visit-y', `${active ? drift : 0}px`);
+    const progress = travel / Math.max(1, h + rect.height);
+    const direction = index === 0 ? -1 : 1;
+    card.style.setProperty('--visit-x', `${active ? direction * 40 * progress : 0}px`);
+    card.style.setProperty('--visit-turn', `${active ? direction * 7 * progress : 0}deg`);
   });
 }
 function scheduleVisitCards() {
@@ -378,3 +403,44 @@ window.addEventListener('scroll', scheduleAboutPhotos, { passive: true });
 window.addEventListener('resize', scheduleAboutPhotos);
 reduceMotion.addEventListener('change', scheduleAboutPhotos);
 updateAboutPhotos();
+
+// Copy the Hours card email without launching a mail application.
+document.querySelectorAll('[data-copy-email]').forEach(button => {
+  let feedbackTimer;
+  button.addEventListener('click', async () => {
+    const status = button.parentElement.querySelector('.copy-email-status');
+    clearTimeout(feedbackTimer);
+    try {
+      await navigator.clipboard.writeText(button.dataset.copyEmail);
+      status.textContent = 'Email copied';
+    } catch {
+      status.textContent = 'Could not copy. Please select the address.';
+    }
+    feedbackTimer = setTimeout(() => { status.textContent = ''; }, 3000);
+  });
+});
+
+// Mobile menu deck: only the foreground sheet participates in focus and reading order.
+const mobileMenuQuery = matchMedia('(max-width: 700px)');
+let selectedMobileMenu = 'food';
+function syncMobileMenu() {
+  menuStack.dataset.mobileMenu = selectedMobileMenu;
+  for (const kind of ['food', 'drinks']) {
+    const sheet = menuStack.querySelector(`.menu-sheet--${kind}`);
+    const inactive = mobileMenuQuery.matches && kind !== selectedMobileMenu;
+    sheet.inert = false;
+    sheet.removeAttribute('aria-hidden');
+    sheet.dataset.mobileInactive = String(inactive);
+    [...sheet.children].filter(child => !child.classList.contains('menu-sheet-heading')).forEach(child => {
+      child.inert = inactive;
+      if (inactive) child.setAttribute('aria-hidden', 'true');
+      else child.removeAttribute('aria-hidden');
+    });
+    menuStack.querySelector(`[data-menu-select="${kind}"]`).setAttribute('aria-pressed', String(kind === selectedMobileMenu));
+  }
+}
+menuStack.querySelectorAll('[data-menu-select]').forEach(button => {
+  button.addEventListener('click', () => { selectedMobileMenu = button.dataset.menuSelect; syncMobileMenu(); });
+});
+mobileMenuQuery.addEventListener('change', syncMobileMenu);
+syncMobileMenu();

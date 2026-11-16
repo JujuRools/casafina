@@ -1533,11 +1533,8 @@ html { overflow-x: clip; }
 .moment,
 .menu-sheet { border-radius: 4px; }
 
-/* Match the navigation to the contact text's total four-pixel increase. */
-.top-bar-links .top-bar-link { font-size: calc(clamp(12px, 1.12vw, 16px) + 4px); }
-@media (max-width: 700px) {
- .top-bar-links .top-bar-link { font-size: 16px; }
-}
+/* Fixed navigation typography; layout breakpoints handle narrower screens. */
+.top-bar-links .top-bar-link { font-family: "IBM Plex Mono", monospace; font-size: 18px; font-weight: 600; letter-spacing: .06em; }
 
 /* Hours and location cards from the updated Figma page. */
 .menu-info-card.visit-cards, #hours-reservation.visit-cards {
@@ -1700,3 +1697,182 @@ html { overflow-x: clip; }
 
 /* Hero navigation and contact typography. */
 .top-bar, .top-bar .top-bar-link, .page-footer, .page-footer .top-bar-link { font-family: "IBM Plex Mono", monospace; }
+
+/* Fixed-size hero booking button. */
+.top-bar .top-bar-link--solid,
+.top-bar a.top-bar-link--solid:hover {
+ box-sizing: border-box;
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ width: max-content;
+ min-width: 158px;
+ height: 45px;
+ flex-shrink: 0;
+ padding: 0 20px;
+ background: #ffe6b7;
+ color: #6e2432;
+ border-radius: 4px;
+}
+
+img.about-chef-photo { object-fit: cover; object-position: center 25%; }
+
+/* Updated Figma Directions card with the live map between address and action. */
+.direction-pattern { position: absolute; max-width: none; transform: rotate(26.11deg); pointer-events: none; }
+.direction-pattern--one { left: -240.04px; top: -155.28px; }
+.direction-pattern--two { left: 16.26px; top: 21.98px; }
+.direction-paper { position: absolute; left: 30px; top: 29.89px; max-width: none; }
+.direction-lines { position: absolute; left: 55px; top: 108px; max-width: none; }
+.visit-card--location .visit-card__content { inset: 0; color: #6e2432; }
+.visit-card--location h2 { position: absolute; top: 68px; width: 100%; font-size: 21px; letter-spacing: 0; }
+.visit-card--location .visit-card__address { position: absolute; top: 133px; width: 100%; margin: 0; font-weight: 700; }
+.visit-card--location .visit-card__map { left: 75px; top: 207px; right: auto; bottom: auto; width: 404px; height: 306px; }
+.visit-card--location a.visit-card__button { position: absolute; top: 545px; left: 50%; transform: translateX(-50%); margin: 0; width: 206px; height: 45px; display: flex; align-items: center; justify-content: center; padding: 0 20px; border: 0; background: #52673f; color: #fff; font-size: 18px; font-weight: 700; letter-spacing: 1.08px; }
+
+/* Keep the visit cards close together and clear of the About section. */
+@media (min-width: 801px) {
+ .menu-section__layout { gap: 40px; }
+ .visit-card--location { margin-top: 20px; }
+}
+.visit-card--location .visit-card__map { left: 95px; top: 218px; width: 364px; height: 275px; }
+
+/* Updated Hours and Contact card. */
+.visit-card--hours .visit-card__content { inset: 0; color: #6e2432; }
+.visit-card--hours h2 { position: absolute; top: 68px; width: 100%; font-size: 21px; letter-spacing: 0; }
+.visit-card--hours h3 { position: absolute; top: 320px; width: 100%; margin: 0; font-size: 21px; letter-spacing: 0; }
+.visit-card--hours .visit-card__hours, .hours-contact { position: absolute; left: 108px; width: 319px; top: 148px; margin: 0; }
+.visit-card--hours .visit-card__hours div, .hours-contact div { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 9px; min-height: 24px; }
+.visit-card--hours dt { font-size: 14px; font-weight: 700; letter-spacing: 1.4px; }
+.visit-card--hours dd { margin: 0; font: 400 20px/1.2 "Letters Home", cursive; text-transform: none; letter-spacing: 0; }
+.hours-contact { top: 382px; }
+.hours-contact div { margin-bottom: 13px; }
+.hours-contact a { color: inherit; text-decoration: none; }
+.visit-card--hours a.visit-card__button { position: absolute; top: 523px; left: 50%; transform: translateX(-50%); margin: 0; height: 45px; display: flex; align-items: center; justify-content: center; padding: 0 20px; border: 0; background: #ccb54b; color: white; font-size: 18px; font-weight: 700; letter-spacing: 1.08px; }
+
+/* Overlapping visit-card composition from the full-page Figma design. */
+@media (min-width: 801px) {
+ .menu-info-card.visit-cards, #hours-reservation.visit-cards { width: min(100%, 1019px); grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0; padding-bottom: 80px; }
+ .visit-cards .visit-card { width: 108.8%; transform: translateY(var(--visit-y, 0px)) rotate(var(--visit-angle)); }
+ .visit-card--hours { --visit-angle: -1deg; z-index: 1; }
+ .visit-cards .visit-card--location { --visit-angle: 1deg; margin-left: -8.8%; margin-top: 170px; z-index: 2; }
+}
+
+@media (min-width: 801px) {
+ .visit-cards .visit-card { transform: translate(var(--visit-x, 0px), var(--visit-y, 0px)) rotate(calc(var(--visit-angle) + var(--visit-turn, 0deg))); }
+ .visit-cards .visit-card:focus-within { z-index: 3; }
+ .visit-cards .visit-card:hover { z-index: 4; }
+}
+
+.hours-contact dd { position: relative; }
+.copy-email { padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
+.copy-email:hover { text-decoration: underline; }
+.copy-email:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+.copy-email-status { position: absolute; right: 0; top: 100%; white-space: nowrap; font: 500 11px/1.4 "IBM Plex Mono", monospace; }
+
+/* Phone and tablet layout: keep artwork inside gutters and copy readable. */
+@media (max-width: 1100px) {
+ .frame-placement { width: calc(100% - 48px); max-width: 850px; transform: translate(-50%, -50%); }
+ .frame-logo { top: 50%; width: 100%; max-width: 100%; transform: translate(-50%, -50%); }
+ .top-frame { visibility: hidden; transform: none; }
+ .site-shell { min-height: 0; }
+ .top-bar { gap: 12px; margin: 16px 0; }
+ .top-bar-links { gap: 8px 16px; }
+ .top-bar-links .top-bar-link { font-size: 14px; padding: 10px 0; }
+ .page-footer { position: relative; inset: auto; margin: 0 0 24px; padding: 0 24px; }
+ .page-footer .top-bar-link { white-space: normal; font-size: 14px; line-height: 1.6; overflow-wrap: anywhere; }
+ .about-section { padding: 20px 24px 80px; }
+ .about-composition { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: 40px; min-height: 0; }
+ .about-letter { width: 100%; max-width: 650px; height: auto; aspect-ratio: auto; container-type: normal; padding: 40px 28px; background: #fff; border-radius: 4px; }
+ .about-letter__canvas { width: 100%; height: auto; transform: none; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 24px; }
+ .about-letter__paper { display: none; }
+ .about-letter__intro { position: static; width: auto; grid-column: 1 / -1; }
+ .about-letter__intro p { width: auto; max-width: 480px; margin: 24px auto 0; }
+ .about-letter p { font-size: 14px; line-height: 1.8; }
+ .about-letter .about-letter__chef-heading { position: static; width: auto; grid-column: 1 / -1; margin-top: 16px; }
+ .about-letter__bio { position: static; width: auto; margin: 0; }
+ img.about-chef-photo { position: static; width: 100%; height: auto; aspect-ratio: 169 / 177; }
+ .about-letter__signature-a, .about-letter__signature-b { display: none; }
+ .about-polaroid--left, .about-polaroid--right { position: relative; inset: auto; width: min(38%,300px); }
+}
+@media (max-width: 700px) {
+ .top-bar-links { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; text-align: center; }
+ .top-bar-links .top-bar-link { font-size: 12px; white-space: normal; line-height: 1.4; min-height: 44px; display: flex; align-items: center; justify-content: center; }
+ .top-bar .top-bar-link--solid { width: 100%; min-width: 0; padding: 0 12px; }
+ .frame-placement { width: calc(100% - 40px); }
+ .page-footer .top-bar-link { font-size: 12px; }
+ .about-letter { padding: 32px 22px; }
+ .about-letter__canvas { grid-template-columns: minmax(0,1fr); }
+ .about-letter h2 { font-size: 18px; }
+ img.about-chef-photo { max-width: 240px; justify-self: center; }
+ .about-polaroid--left, .about-polaroid--right { width: min(80%,300px); }
+ .moments .moment { max-width: calc(100vw - 80px); }
+}
+@media (min-width: 801px) and (max-width: 1100px) {
+ .menu-stack { height: auto; display: flex; flex-direction: column; align-items: center; gap: 40px; }
+ .menu-stack .menu-sheet { position: relative; inset: auto; width: min(100%,430px); transform: none; }
+ .corner-gift-card { position: relative; inset: auto; align-self: center; margin: 20px 0; }
+ .menu-info-card.visit-cards, #hours-reservation.visit-cards { width: min(100%,554px); grid-template-columns: 1fr; gap: 48px; padding-bottom: 40px; }
+ .visit-cards .visit-card { width: 100%; margin: 0; transform: none; }
+ .about-polaroid--left { transform: rotate(-7deg); }
+ .about-polaroid--right { transform: rotate(6deg); }
+}
+@media (max-width: 700px) {
+ .top-bar-links { display: flex; flex-direction: column; gap: 6px; }
+ .top-bar-links .top-bar-link { min-height: 28px; }
+ .top-bar .top-bar-link--solid { width: max-content; min-height: 45px; margin-top: 6px; padding: 0 20px; }
+}
+@media (max-width: 700px) and (prefers-reduced-motion: no-preference) {
+ .moments { margin-top: -100dvh; padding: 0; height: var(--moments-scroll-height, 300dvh); }
+ .moments__stage { position: sticky; top: 0; height: 100dvh; display: block; }
+ .moments .moment { position: absolute; left: 50%; right: auto; top: 55%; translate: -50% -50%; width: min(72vw, 34dvh); max-width: none; opacity: var(--toss-visible,0); transform: translate3d(var(--moment-x,0px),var(--moment-y,110vh),0) rotate(calc(var(--moment-angle) + var(--moment-scroll-angle,0deg))); }
+ .moment--left { z-index: 3; }
+ .moment--right { z-index: 2; }
+ .moment--center { z-index: 1; --moment-angle: -2deg; }
+}
+
+@media (max-width: 700px) {
+ .top-bar-links { gap: 3px; }
+ .top-bar-links .top-bar-link { min-height: 0; padding-top: 5px; padding-bottom: 5px; }
+ .top-bar .top-bar-link--solid { min-height: 45px; margin-top: 3px; }
+ .moments { overflow-x: clip; }
+}
+
+@media (max-width: 700px) {
+ .menu-stack { display: grid; grid-template-columns: minmax(0,1fr); gap: 0; width: min(100%,430px); padding-top: 58px; }
+ .menu-stack .menu-sheet--cover { display: none; }
+ .menu-stack .menu-sheet--food, .menu-stack .menu-sheet--drinks { grid-column: 1; grid-row: 1; position: relative; inset: auto; width: 100%; margin: 0; transform: none; z-index: 2; min-height: 0; }
+ .menu-stack[data-mobile-menu="food"] .menu-sheet--drinks, .menu-stack[data-mobile-menu="drinks"] .menu-sheet--food { position: absolute; inset: 44px 0 auto; height: 400px; z-index: 1; overflow: hidden; pointer-events: none; }
+ .menu-sheet[aria-hidden="true"] > * { visibility: hidden; }
+ .menu-stack .corner-gift-card { grid-row: 2; margin-top: 40px; }
+ .menu-sheet-heading { padding-top: 28px; margin-bottom: 32px; }
+}
+@media (max-width: 700px) and (prefers-reduced-motion: no-preference) {
+ .menu-section { margin-top: calc(-1 * var(--mobile-menu-advance, 0px)); }
+}
+
+/* The original sheet heading is the mobile deck control. */
+.mobile-menu-heading-button { display: none; }
+@media (max-width: 700px) {
+ .menu-stack { padding-top: 150px; }
+ .menu-stack .menu-sheet-heading { position: relative; padding-top: 28px; margin-bottom: 32px; }
+ .mobile-menu-heading-button { display: block; position: absolute; inset: 0; width: 100%; height: 100%; background: transparent; border: 0; cursor: pointer; border-radius: 4px; }
+ .mobile-menu-heading-button:focus-visible { outline: 3px solid #ccb54b; outline-offset: -5px; }
+ .menu-stack[data-mobile-menu="food"] .menu-sheet--drinks, .menu-stack[data-mobile-menu="drinks"] .menu-sheet--food { top: -150px; height: 400px; pointer-events: auto; }
+ .menu-sheet[data-mobile-inactive="true"] > :not(.menu-sheet-heading) { visibility: hidden; }
+}
+
+@media (max-width: 700px) {
+ .menu-stack { padding-top: 85px; }
+ .menu-stack .menu-sheet { box-shadow: 0 3px 6px #0002; }
+ .menu-stack .menu-sheet-heading h2 { font-size: 40px; }
+ .menu-stack .menu-sheet-heading span { font-size: 20px; }
+ .menu-stack .menu-item__name, .menu-stack .menu-item__price, .menu-stack .wine-item { font-size: 13px; }
+ .menu-stack .menu-panel__title { font-size: 17px; }
+ .menu-stack[data-mobile-menu="food"] .menu-sheet--drinks, .menu-stack[data-mobile-menu="drinks"] .menu-sheet--food { top: -85px; transform: scale(.8); transform-origin: top center; }
+}
+
+@media (max-width: 700px) { .menu-sheet[data-mobile-inactive="false"] .menu-sheet-heading { padding-top: 10px; } }
+
+@media (max-width: 700px) and (prefers-reduced-motion: no-preference) {
+ .menu-section { padding-top: 0; transform: translateY(var(--mobile-menu-enter-offset, 0px)); }
+}
