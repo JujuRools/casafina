@@ -5,13 +5,13 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const staging = await mkdtemp(path.join(root, '.site-build-'));
-const legacyFiles = new Set(['index.html', 'styles.css', 'script.js', 'logo.svg']);
+const entryFiles = new Set(['index.html', 'styles.css', 'script.js', 'logo.svg']);
 try {
-  // Reuse unchanged assets, while freezing the currently published homepage.
+  // Publish the current site at the main domain; keep the archived homepage in legacy.
   for (const entry of await readdir(root, { withFileTypes: true })) {
     if (entry.name.startsWith('.') || ['dist', 'legacy', 'scripts', 'work'].includes(entry.name)) continue;
-    if (legacyFiles.has(entry.name)) {
-      await copyFile(path.join(root, 'legacy', entry.name), path.join(staging, entry.name));
+    if (entryFiles.has(entry.name)) {
+      await copyFile(path.join(root, entry.name), path.join(staging, entry.name));
     } else {
       await symlink(path.join(root, entry.name), path.join(staging, entry.name));
     }
