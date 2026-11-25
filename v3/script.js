@@ -241,8 +241,8 @@ function updateMoments() {
     const rowTravel = Math.min(Math.max(0, scrollTravel - interval), Math.max(0, stickyTravel - interval));
     // Deal from the upper left, upper right, then lower left, back to front.
     const dealOrder = [2, 0, 1][index];
-    const elapsed = performance.now() - momentsEntranceStart - dealOrder * 180;
-    const enter = clamp(elapsed / 950, 0, 1);
+    const elapsed = performance.now() - momentsEntranceStart - dealOrder * 140;
+    const enter = clamp(elapsed / 750, 0, 1);
     const scrollBlend = 1 - clamp(scrollTravel / interval, 0, 1);
     const landed = 1 - Math.pow(1 - enter, 3);
     const remaining = (1 - landed) * scrollBlend;
@@ -284,8 +284,9 @@ reduceMotion.addEventListener('change', scheduleMoments);
 updateMoments();
 
 function startMomentsEntrance() {
-  momentsEntranceStart = performance.now() + 120;
+  momentsEntranceStart = performance.now() + (reduceMotion.matches ? 120 : 1700);
   function animateMoments(now) {
+    if (now >= momentsEntranceStart || reduceMotion.matches) document.documentElement.classList.remove("hero-intro-pending");
     updateMoments();
     if (now < momentsEntranceStart + 1400) requestAnimationFrame(animateMoments);
   }
@@ -473,3 +474,20 @@ menuStack.querySelectorAll('[data-menu-select]').forEach(button => {
 });
 mobileMenuQuery.addEventListener('change', syncMobileMenu);
 syncMobileMenu();
+
+// Keep the animation viewport-sized while matching the original final wordmark width.
+function sizeAnimatedLogo() {
+  const logo = document.querySelector('svg.frame-logo');
+  if (!logo) return;
+  const width = document.documentElement.clientWidth;
+  const height = window.innerHeight;
+  const oldFrameWidth = Math.min(504, Math.max(380, width * .42));
+  const finalWidth = width <= 1100
+    ? Math.min(width - 48, 850)
+    : (oldFrameWidth - 32 + 30 / 1.536) * 1.536 * 1.44;
+  const viewWidth = 1908 * width / finalWidth;
+  const viewHeight = viewWidth * height / width;
+  logo.setAttribute('viewBox', `${954 - viewWidth / 2} ${402 - viewHeight / 2} ${viewWidth} ${viewHeight}`);
+}
+sizeAnimatedLogo();
+window.addEventListener('resize', sizeAnimatedLogo);
