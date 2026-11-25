@@ -1967,3 +1967,11 @@ img.about-chef-photo { object-fit: cover; object-position: center 25%; }
  #hours-reservation.visit-cards { padding-bottom: 0; }
  .about-section { padding-top: var(--mobile-about-gap, 80px); }
 }
+
+/* Square mobile paper, media, and controls; retain the gift-card artwork. */
+@media (max-width: 700px) {
+ .moment, .moment__media, .menu-sheet, .about-polaroid, .about-letter,
+ .about-chef-photo, .visit-card, .visit-card__map,
+ .visit-card a.visit-card__button, .mobile-menu-heading-button,
+ .top-bar .top-bar-link--solid { border-radius: 0; }
+}
