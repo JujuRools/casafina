@@ -1843,7 +1843,7 @@ img.about-chef-photo { object-fit: cover; object-position: center 25%; }
  .menu-stack .menu-sheet--food, .menu-stack .menu-sheet--drinks { grid-column: 1; grid-row: 1; position: relative; inset: auto; width: 100%; margin: 0; transform: none; z-index: 2; min-height: 0; }
  .menu-stack[data-mobile-menu="food"] .menu-sheet--drinks, .menu-stack[data-mobile-menu="drinks"] .menu-sheet--food { position: absolute; inset: 44px 0 auto; height: 400px; z-index: 1; overflow: hidden; pointer-events: none; }
  .menu-sheet[aria-hidden="true"] > * { visibility: hidden; }
- .menu-stack .corner-gift-card { grid-row: 2; margin-top: 40px; }
+ .menu-stack .corner-gift-card { grid-row: 2; margin-top: -60px; }
  .menu-sheet-heading { padding-top: 28px; margin-bottom: 32px; }
 }
 @media (max-width: 700px) and (prefers-reduced-motion: no-preference) {
@@ -1875,4 +1875,95 @@ img.about-chef-photo { object-fit: cover; object-position: center 25%; }
 
 @media (max-width: 700px) and (prefers-reduced-motion: no-preference) {
  .menu-section { padding-top: 0; transform: translateY(var(--mobile-menu-enter-offset, 0px)); }
+}
+
+/* Warm paper surfaces; retain the logo and page-link cream. */
+.moment, .menu-sheet, .about-polaroid { background-color: #FCF5E9; }
+@media (max-width: 1100px) { .about-letter { background-color: #FCF5E9; } }
+
+.menu-sheet .menu-item { background-color: #FCF5E9; }
+
+/* A light, static print patina over the hero Polaroids, including live video. */
+.moment { isolation: isolate; box-shadow: inset 0 0 12px #84643b12, 0 3.229px 11.302px #00000021; }
+.moment::after { content: ""; position: absolute; inset: 0; z-index: 4; border-radius: inherit; pointer-events: none; background: url("/assets/cards/aged-polaroid.svg?v=3") center / 100% 100% no-repeat; mix-blend-mode: multiply; opacity: 1; }
+.moment:nth-child(2)::after { transform: rotate(180deg); opacity: .9; }
+.moment:nth-child(3)::after { transform: scaleX(-1); opacity: .95; }
+
+/* Paper relief only: the opaque media sits above the texture. */
+.moment { box-shadow: 0 3.229px 11.302px #00000021; }
+.moment::after { z-index: 0; mix-blend-mode: soft-light; opacity: 1; }
+.moment__media, .moment figcaption { position: relative; z-index: 1; }
+
+.corner-gift-card { display: block; pointer-events: auto; }
+.corner-gift-card img { display: block; width: 100%; height: auto; }
+.corner-gift-card:focus-visible { outline: 3px solid #FCF5E9; outline-offset: 6px; }
+
+/* Expose more of the photographs behind the desktop About paper. */
+@media (min-width: 1101px) {
+ .about-polaroid--left { left: calc(50% - 460px); }
+ .about-polaroid--right { right: calc(50% - 450px); }
+}
+
+/* Keep handwritten photo captions on one line on phones. */
+@media (max-width: 700px) {
+ .moment { container-type: inline-size; }
+ .moment figcaption { font-size: min(16px, 6cqw); white-space: nowrap; }
+}
+
+/* Mobile deck dimensions belong to front/back roles, never to menu identity.
+   Both full sheets share a grid row, each retaining its own content height. */
+@media (max-width: 700px) {
+ .menu-stack .menu-sheet--food,
+ .menu-stack .menu-sheet--drinks {
+   position: relative; inset: auto; width: 100%; height: auto;
+   margin: 0; align-self: start; overflow: visible;
+ }
+ .menu-stack .menu-sheet[data-mobile-inactive="false"] {
+   top: 0; transform: none; translate: none; rotate: 0deg; z-index: 2;
+ }
+ .menu-stack .menu-sheet[data-mobile-inactive="true"] {
+   position: relative; top: -70px; height: auto;
+   transform: scale(.9328); transform-origin: top center;
+   translate: 0 var(--mobile-rear-y, 0px);
+   rotate: var(--mobile-rear-turn, -2deg); z-index: 1;
+ }
+ .menu-stack .menu-sheet[data-mobile-inactive="true"] > :not(.menu-sheet-heading) { visibility: visible; }
+ .menu-stack .menu-sheet .menu-sheet-heading { padding-top: 10px; }
+}
+
+/* Match mobile navigation rhythm to wrapped footer contact lines. */
+@media (max-width: 700px) {
+ .top-bar-links { gap: 0; }
+ .top-bar-links .top-bar-link:not(.top-bar-link--solid) { padding-top: 0; padding-bottom: 0; line-height: 1.6; }
+ .top-bar .top-bar-link--solid { margin-top: 14px; }
+}
+
+@media (max-width: 700px) {
+ .visit-cards .visit-card--hours { rotate: var(--visit-turn, 0deg); }
+}
+
+@media (max-width: 700px) {
+ .menu-stack .corner-gift-card { translate: var(--mobile-gift-x, 0px) var(--mobile-gift-y, 0px); }
+}
+
+@media (max-width: 700px) {
+ .menu-stack .corner-gift-card { transform: none; translate: none; rotate: none; }
+}
+
+@media (max-width: 700px) {
+ .menu-section__layout { gap: var(--mobile-card-gap, 70px); }
+}
+
+@media (max-width: 700px) {
+ .about-polaroid--left, .about-polaroid--right { display: none; }
+}
+
+@media (max-width: 700px) {
+ .menu-stack .corner-gift-card { justify-self: center; left: auto; right: auto; margin-left: auto; margin-right: auto; max-width: 100%; }
+}
+
+@media (max-width: 700px) {
+ .menu-section { padding-bottom: 0; }
+ #hours-reservation.visit-cards { padding-bottom: 0; }
+ .about-section { padding-top: var(--mobile-about-gap, 80px); }
 }

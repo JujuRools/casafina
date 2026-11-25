@@ -179,12 +179,22 @@ const momentCards = [...document.querySelectorAll('.moment')];
 let momentsEntranceStart = Infinity;
 const momentScrollRates = [0.23, 0.42, 0.23];
 let momentsExitTravel = 0;
+const mobileMomentStagger = 0.43;
+let mobileMenuStart = 0;
+let mobileThirdStart = 0;
 function measureMomentsTravel() {
   if (!moments) return;
   if (window.innerWidth <= 700 && !reduceMotion.matches) {
     momentsExitTravel = Math.min(520, window.innerHeight * .65);
-    moments.style.setProperty('--moments-scroll-height', `${window.innerHeight + momentsExitTravel * 3}px`);
-    menuSection?.style.setProperty('--mobile-menu-advance', `${momentsExitTravel}px`);
+    const secondCardHeight = momentCards[2]?.offsetHeight || 0;
+    const secondExitDistance = window.innerHeight + secondCardHeight;
+    const secondTravelToOneThird = window.innerHeight * .55 + secondCardHeight / 2 - secondCardHeight / 3;
+    mobileMenuStart = Math.max(momentsExitTravel * mobileMomentStagger, momentsExitTravel * (mobileMomentStagger + secondTravelToOneThird / secondExitDistance) - 120);
+    mobileThirdStart = mobileMenuStart + 90;
+    mobileMenuStart = Math.max(0, mobileMenuStart - 40);
+    const totalTravel = mobileThirdStart + momentsExitTravel;
+    moments.style.setProperty('--moments-scroll-height', `${window.innerHeight + totalTravel}px`);
+    menuSection?.style.setProperty('--mobile-menu-advance', `${totalTravel - mobileMenuStart}px`);
     menuSection?.style.removeProperty('--menu-photo-overlap');
     return;
   }
@@ -218,7 +228,7 @@ function updateMoments() {
   const interval = momentsExitTravel || Math.min(480, h * .55);
   // The last card and menu share the exact same start in scroll space.
   if (window.innerWidth <= 700) {
-    const lastExitStart = interval * 2;
+    const lastExitStart = mobileMenuStart;
     const beforeLastExit = Math.max(0, lastExitStart - scrollTravel);
     menuSection?.style.setProperty('--mobile-menu-enter-offset', `${beforeLastExit}px`);
   }
@@ -243,7 +253,8 @@ function updateMoments() {
     const fromY = [reachY, -reachY, -reachY * .75][index];
     if (window.innerWidth <= 700) {
       const order = [0, 2, 1][index];
-      const exit = clamp(scrollTravel / interval - order, 0, 1);
+      const exitStart = order === 2 ? mobileThirdStart : order * interval * mobileMomentStagger;
+      const exit = clamp((scrollTravel - exitStart) / interval, 0, 1);
       card.style.setProperty('--moment-y', `${fromY * remaining - exit * (h + card.offsetHeight)}px`);
       card.style.setProperty('--moment-x', `${fromX * remaining + [-1, 1, 1][index] * exit * 45}px`);
       card.style.setProperty('--moment-scroll-angle', `${[-184, 177, -176][index] * remaining + [-1, 1, 1][index] * exit * 16}deg`);
@@ -316,6 +327,10 @@ function updateMenuStack() {
   if (!menuStack) return;
   const active = window.innerWidth > 800 && !reduceMotion.matches;
   const rect = menuStack.getBoundingClientRect();
+  const mobileRearTravel = window.innerWidth <= 700 && !reduceMotion.matches
+    ? Math.max(0, window.innerHeight - rect.top) * .06 : 0;
+  menuStack.style.setProperty('--mobile-rear-y', `${-mobileRearTravel}px`);
+  menuStack.style.setProperty('--mobile-rear-turn', `-2deg`);
   // Keep drifting until the complete stack has passed above the viewport.
   const progress = active
     ? clamp((window.innerHeight - rect.top) / (window.innerHeight + rect.height + 80), 0, 1)
@@ -332,7 +347,20 @@ function updateMenuStack() {
   menuStack.style.setProperty('--sheet-unturn-right', `${-2 * unrevealed}deg`);
   menuStack.style.setProperty('--sheet-spread', `${distance * progress}px`);
   menuStack.style.setProperty('--sheet-turn', `${2 * progress}deg`);
-  menuStack.style.setProperty('--gift-card-turn', `${-14 * progress}deg`);
+  const gift = menuStack.querySelector('.corner-gift-card');
+  const giftTop = gift ? rect.top + gift.offsetTop : 0;
+  if (window.innerWidth <= 700 && gift) {
+    const menuBottom = Math.max(...[...menuStack.querySelectorAll('.menu-sheet--food, .menu-sheet--drinks')].map(sheet => sheet.getBoundingClientRect().bottom));
+    const gapAbove = Math.max(0, gift.getBoundingClientRect().top - menuBottom);
+    document.documentElement.style.setProperty('--mobile-about-gap', `${gapAbove}px`);
+    menuStack.parentElement.style.setProperty('--mobile-card-gap', `${Math.max(0, gapAbove - 15)}px`);
+  }
+
+  const mobileGiftProgress = window.innerWidth <= 700 && !reduceMotion.matches && gift
+    ? Math.max(0, (window.innerHeight - giftTop) / (window.innerHeight + gift.offsetHeight)) : 0;
+  menuStack.style.setProperty('--gift-card-turn', `${window.innerWidth <= 700 ? 14 * mobileGiftProgress : -14 * progress}deg`);
+  menuStack.style.setProperty('--mobile-gift-y', `${-60 * mobileGiftProgress}px`);
+  menuStack.style.setProperty('--mobile-gift-x', `${24 * mobileGiftProgress}px`);
   menuStack.style.setProperty('--sheet-center-y', `${-90 * progress}px`);
 }
 function scheduleMenuStack() {
@@ -360,7 +388,8 @@ function updateVisitCards() {
     const progress = travel / Math.max(1, h + rect.height);
     const direction = index === 0 ? -1 : 1;
     card.style.setProperty('--visit-x', `${active ? direction * 40 * progress : 0}px`);
-    card.style.setProperty('--visit-turn', `${active ? direction * 7 * progress : 0}deg`);
+    const mobileHours = false;
+    card.style.setProperty('--visit-turn', `${active || mobileHours ? direction * 7 * progress : 0}deg`);
   });
 }
 function scheduleVisitCards() {
